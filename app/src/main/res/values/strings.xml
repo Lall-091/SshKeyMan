@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">Ssh Key Man</string>
+    <string name="app_name">SshKeyMan</string>
+    <string name="menu">Menu</string>
+    <string name="close">Close</string>
+    <string name="back">Back</string>
+    <string name="sshkeys">SshKeys</string>
+    <string name="about">About</string>
+    <string name="unsupported">Unsupported</string>
+    <string name="copied">Copied</string>
+
+    <string name="publickey">PublicKey</string>
+    <string name="click_to_copy">click to copy</string>
+    <string name="privatekey">PrivateKey</string>
+    <string name="update_time">UpdateTime</string>
+    <string name="detais">details</string>
+    <string name="click_to_view">click to view</string>
+    <string name="passphrase">Passphrase</string>
+    <string name="err_restart_app_may_resolve">err: restart app may resolve</string>
+    <string name="launching">Launching...</string>
+
 </resources>
