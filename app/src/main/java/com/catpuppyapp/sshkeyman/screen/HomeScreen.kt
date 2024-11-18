@@ -99,22 +99,18 @@ fun HomeScreen(
     val drawTextList = listOf(
         stringResource(id = R.string.sshkeys),
         stringResource(id = R.string.about),
-        stringResource(id = R.string.exit),
     )
     val drawIdList = listOf(
         Cons.selectedItem_SshKeys,
         Cons.selectedItem_About,
-        Cons.selectedItem_Exit
     )
     val drawIconList = listOf(
         Icons.Filled.Key,
         Icons.Filled.Info,
-        Icons.AutoMirrored.Filled.ExitToApp
     )
     val refreshPageList = listOf(
         refreshSshKeyPage@{ changeStateTriggerRefreshPage(needRefreshSshKeyPage) },
         refreshAboutPage@{}, //About页面静态的，不需要刷新
-        exit@{AppModel.singleInstanceHolder.exitApp()}
     )
 
     val openDrawer = {  //打开侧栏(抽屉)

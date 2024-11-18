@@ -156,108 +156,118 @@ fun SshKeyItem(
                     )
 
                 }
-                HorizontalDivider()
-                Column(
-                    modifier = Modifier.padding(start = 10.dp, top = 4.dp, end = 10.dp, bottom = 10.dp)
+
+            }
+
+            HorizontalDivider()
+
+            Column(
+                modifier = Modifier.padding(start = 10.dp, top = 4.dp, end = 10.dp, bottom = 10.dp)
+            ) {
+
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
+                    Text(text = stringResource(R.string.publickey) + ":")
+                    Text(
+                        text = stringResource(R.string.click_to_copy),
 
-
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(text = stringResource(R.string.publickey) + ":")
-                        Text(
-                            text = stringResource(R.string.click_to_copy),
-
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            fontWeight = FontWeight.Light,
-                            modifier = MyStyleKt.ClickableText.modifier.clickable {
-                                copyAndShowCopied(curItemDto.publicKey, activityContext, clipboardManager)
-                            },
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontWeight = FontWeight.Light,
+                        style = MyStyleKt.ClickableText.style,
+                        color = MyStyleKt.ClickableText.color,
+                        modifier = MyStyleKt.ClickableText.modifier.clickable {
+                            copyAndShowCopied(curItemDto.publicKey, activityContext, clipboardManager)
+                        },
 
 
                         )
-                    }
-
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(text = stringResource(R.string.privatekey) + ":")
-                        Text(
-                            text = stringResource(R.string.click_to_copy),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            fontWeight = FontWeight.Light,
-                            modifier = MyStyleKt.ClickableText.modifier.clickable {
-                                copyAndShowCopied(curItemDto.privateKey, activityContext, clipboardManager)
-                            },
-
-
-                        )
-                    }
-
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(text = stringResource(R.string.passphrase) + ":")
-                        Text(
-                            text = stringResource(R.string.click_to_copy),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            fontWeight = FontWeight.Light,
-                            modifier = MyStyleKt.ClickableText.modifier.clickable {
-                                copyAndShowCopied(curItemDto.passphrase, activityContext, clipboardManager)
-                            }
-
-
-                        )
-                    }
-
-
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(text = stringResource(R.string.detais) + ":")
-                        Text(
-                            text = stringResource(R.string.click_to_view),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            fontWeight = FontWeight.Light,
-
-                            modifier = MyStyleKt.ClickableText.modifier.clickable {
-
-                                val sb = StringBuilder()
-                                sb.appendLine("public key:")
-                                sb.appendLine(curItemDto.publicKey).appendLine()
-                                sb.appendLine("private key:")
-                                sb.appendLine(curItemDto.privateKey).appendLine()
-                                sb.appendLine("passphrase:")
-                                sb.appendLine(curItemDto.passphrase).appendLine()
-
-                                viewDialogText.value = sb.toString()
-
-                                showViewDialog.value = true
-                            },
-
-                            )
-                    }
-
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(text = stringResource(R.string.update_time) + ":")
-                        Text(
-                            text = getFormatTimeFromSec(curItemDto.baseFields.baseUpdateTime),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            fontWeight = FontWeight.Light,
-                            modifier = MyStyleKt.NormalText.modifier,
-
-                            )
-                    }
-
                 }
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = stringResource(R.string.privatekey) + ":")
+                    Text(
+                        text = stringResource(R.string.click_to_copy),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontWeight = FontWeight.Light,
+                        style = MyStyleKt.ClickableText.style,
+                        color = MyStyleKt.ClickableText.color,
+                        modifier = MyStyleKt.ClickableText.modifier.clickable {
+                            copyAndShowCopied(curItemDto.privateKey, activityContext, clipboardManager)
+                        },
+
+
+                        )
+                }
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = stringResource(R.string.passphrase) + ":")
+                    Text(
+                        text = stringResource(R.string.click_to_copy),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontWeight = FontWeight.Light,
+                        style = MyStyleKt.ClickableText.style,
+                        color = MyStyleKt.ClickableText.color,
+                        modifier = MyStyleKt.ClickableText.modifier.clickable {
+                            copyAndShowCopied(curItemDto.passphrase, activityContext, clipboardManager)
+                        }
+
+
+                    )
+                }
+
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = stringResource(R.string.detais) + ":")
+                    Text(
+                        text = stringResource(R.string.click_to_view),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontWeight = FontWeight.Light,
+                        style = MyStyleKt.ClickableText.style,
+                        color = MyStyleKt.ClickableText.color,
+                        modifier = MyStyleKt.ClickableText.modifier.clickable {
+
+                            val sb = StringBuilder()
+                            sb.appendLine("public key:")
+                            sb.appendLine(curItemDto.publicKey).appendLine()
+                            sb.appendLine("private key:")
+                            sb.appendLine(curItemDto.privateKey).appendLine()
+                            sb.appendLine("passphrase:")
+                            sb.appendLine(curItemDto.passphrase).appendLine()
+
+                            viewDialogText.value = sb.toString()
+
+                            showViewDialog.value = true
+                        },
+
+                        )
+                }
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = stringResource(R.string.create) + ":")
+                    Text(
+                        text = getFormatTimeFromSec(curItemDto.baseFields.baseUpdateTime),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontWeight = FontWeight.Light,
+                        modifier = MyStyleKt.NormalText.modifier,
+
+                    )
+                }
+
             }
         }
     }

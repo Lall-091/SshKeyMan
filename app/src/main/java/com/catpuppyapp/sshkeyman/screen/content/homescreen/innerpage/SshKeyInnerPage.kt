@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -133,13 +135,17 @@ fun SshKeyInnerPage(
     val algoList = SshKeyUtil.algoList
     val selectedAlgo = rememberSaveable { mutableIntStateOf(0) }
 
+    val spacerHeight = remember {15.dp}
     if(showCreateDialog.value) {
         ConfirmDialog2(
+            title = stringResource(R.string.create),
             requireShowTextCompose = true,
             textCompose = {
                 ScrollableColumn {
 
                     TextField(
+                        modifier = Modifier.fillMaxWidth(),
+
                         value = name.value,
                         onValueChange = {
                             name.value = it
@@ -150,7 +156,11 @@ fun SshKeyInnerPage(
                         },
                     )
 
+                    Spacer(Modifier.height(spacerHeight))
+
                     TextField(
+                        modifier = Modifier.fillMaxWidth(),
+
                         value = email.value,
                         onValueChange = {
                             email.value = it
@@ -160,17 +170,17 @@ fun SshKeyInnerPage(
                             Text(stringResource(R.string.email))
                         },
                     )
+                    Spacer(Modifier.height(spacerHeight))
 
                     TextField(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(10.dp),
-//                    singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true,
                         value = passphrase.value,
                         onValueChange = {
                             passphrase.value=it
                         },
-
+//                        label = stringResource(R.string.passphrase),
+//                        placeholder = "",
                         visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         trailingIcon = {
@@ -187,10 +197,11 @@ fun SshKeyInnerPage(
                                 // contentDescription is for accessibility
                                 Icon(imageVector = image, contentDescription = description)
                             }
-                        }
-
+                        },
+                        label = { Text(stringResource(R.string.passphrase)) }
                     )
 
+                    Spacer(Modifier.height(spacerHeight))
 
                     for ((k, optext) in algoList.withIndex()) {
                         Row(
