@@ -8,6 +8,7 @@ import java.util.concurrent.ConcurrentHashMap
 class Cons {
     companion object {
 
+        const val TempKeysDirName = "temp_keys"
         const val ChangeListNaviTarget_InitValue = "cl_navi_init_value"
         const val ChangeListNaviTarget_NoNeedReload = "cl_navi_no_need_reload"  //导航到这些页面(Difference/Editor)再返回不需要刷新页面(navi to these pages(Difference/Editor) then navi back, no need reload)
 

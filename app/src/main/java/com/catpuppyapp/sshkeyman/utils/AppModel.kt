@@ -20,9 +20,7 @@ import com.catpuppyapp.sshkeyman.constants.Cons
 import com.catpuppyapp.sshkeyman.data.AppContainer
 import com.catpuppyapp.sshkeyman.data.AppDataContainer
 import kotlinx.coroutines.CoroutineScope
-import org.bouncycastle.jce.provider.BouncyCastleProvider
 import java.io.File
-import java.security.Security
 
 private val TAG ="AppModel"
 
@@ -49,16 +47,6 @@ class AppModel {
             if(inited_1.value.not()) {
                 inited_1.value = true
 
-                // 添加 Bouncy Castle 提供者
-//                Security.addProvider(BouncyCastleProvider())
-
-//                SshKeyUtil.testecd25519()
-                //test
-                val sshkeypair = SshKeyUtil.generateKeyPair("test1", SshKeyUtil.RSA2048, "mypass", "abc@email")
-                println("private key:\n ${sshkeypair.privateKey}")
-                println("public key:\n ${sshkeypair.publicKey}")
-                //test
-
                 //set dbHolder ，如果以后使用依赖注入框架，这个需要修改
                 appModel.dbContainer = AppDataContainer(realAppContext)
 
@@ -77,7 +65,18 @@ class AppModel {
             val innerDataDir = getInnerDataDirOrThrowException(activityContext)
             appModel.externalFilesDir = externalFilesDir
             appModel.externalCacheDir = externalCacheDir
+            appModel.tempKeysDir = createDirIfNonexists(externalCacheDir, Cons.TempKeysDirName)
             appModel.innerDataDir = innerDataDir
+
+            // clear keys cache every time launch
+            try {
+                appModel.tempKeysDir.deleteRecursively()
+                appModel.tempKeysDir.mkdirs()
+            }catch (e:Exception) {
+                MyLog.e(TAG, "#$funName: clear keys cache dir err: ${e.stackTraceToString()}")
+            }
+
+
 
 
 //            AppModel.singleInstanceHolder.logDir = createLogDirIfNonexists(externalCacheDir, Cons.defaultLogDirName);
@@ -271,6 +270,7 @@ class AppModel {
     lateinit var exitApp: ()->Unit
     lateinit var externalFilesDir: File
     lateinit var externalCacheDir: File
+    lateinit var tempKeysDir: File
 
     // app 的内部目录， /data/data/app包名 或者 /data/user/0/app包名，这俩目录好像其中一个是另一个的符号链接
     lateinit var innerDataDir: File
@@ -299,6 +299,14 @@ class AppModel {
         }
 
         return externalCacheDir
+    }
+
+    fun getOrCreateTempKeysDir():File{
+        if(tempKeysDir.exists().not()) {
+            tempKeysDir.mkdirs()
+        }
+
+        return tempKeysDir
     }
 
 }

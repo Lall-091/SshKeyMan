@@ -69,8 +69,12 @@ object FsUtils {
     }
 
 
-    fun createTempFile(prefix:String, suffix:String=".tmp"):File{
-        return File(AppModel.singleInstanceHolder.getOrCreateExternalCacheDir().canonicalPath, "$prefix-${generateRandomString()}$suffix")
+    fun createTempFile(prefix:String, suffix:String=".tmp", baseDirPath:String =AppModel.singleInstanceHolder.getOrCreateExternalCacheDir().canonicalPath):File{
+        return File(baseDirPath, "$prefix-${generateRandomString()}$suffix")
+    }
+
+    fun createTempKeyFile(prefix:String, suffix:String=".tmp", baseDirPath:String =AppModel.singleInstanceHolder.getOrCreateTempKeysDir().canonicalPath):File{
+        return FsUtils.createTempFile(prefix, suffix, baseDirPath)
     }
 
     fun copy(input:InputStream, output:OutputStream) {
