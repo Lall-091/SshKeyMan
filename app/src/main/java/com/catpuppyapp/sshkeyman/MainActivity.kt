@@ -1,4 +1,4 @@
-package com.catpuppyapp.sshkeyman.play.pro
+package com.catpuppyapp.sshkeyman
 
 import android.content.Context
 import android.os.Bundle
@@ -18,11 +18,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.compositionContext
 import androidx.compose.ui.platform.createLifecycleAwareWindowRecomposer
 import androidx.core.view.WindowCompat
-import com.catpuppyapp.sshkeyman.R
 import com.catpuppyapp.sshkeyman.compose.LoadingText
 import com.catpuppyapp.sshkeyman.screen.AppScreenNavigator
-import com.catpuppyapp.sshkeyman.ui.theme.CatPuppyAppAndroidTheme
-import com.catpuppyapp.sshkeyman.ui.theme.Theme
+import com.catpuppyapp.sshkeyman.theme.CatPuppyAppAndroidTheme
+import com.catpuppyapp.sshkeyman.theme.Theme
 import com.catpuppyapp.sshkeyman.utils.AppModel
 import com.catpuppyapp.sshkeyman.utils.LanguageUtil
 import com.catpuppyapp.sshkeyman.utils.MyLog

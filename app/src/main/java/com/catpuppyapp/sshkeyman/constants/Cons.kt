@@ -1,6 +1,5 @@
 package com.catpuppyapp.sshkeyman.constants
 
-import com.github.git24j.core.Oid
 import kotlinx.coroutines.sync.Mutex
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -41,26 +40,13 @@ class Cons {
         val dateTimeFormatter_yyyyMMdd:DateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd")
         val dateTimeFormatter_yyyyMMddHHmm:DateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm")
 
-        val allZeroOid = Oid.of("0000000000000000000000000000000000000000")  //40个0
-        val allZeroOidStr = "0000000000000000000000000000000000000000"  //40个0
-        val gitLocalWorktreeCommitHash = "local"  //代表worktree
-        val gitIndexCommitHash = "index"  //代表index
-        val gitHeadCommitHash = "HEAD"  //代表HEAD
-
-        val gitDotModules = ".gitmodules"
-
 //        const val defaultPageCount=50  //默认每页条目数
 
         //const的作用是定义编译时常量，可能会内联优化之类的
         const val selectedItem_Never = -1 //这个变量永远不会是这个值，这个值只是为了在页面里配合关联的状态变量实现永真判断的，目前20240411用在切换页面更新配置文件中记住的页面值上
-        const val selectedItem_Repos = 1;
-        const val selectedItem_Files = 2;
-        const val selectedItem_Editor = 3;
-        const val selectedItem_ChangeList = 4;
-        const val selectedItem_Settings = 5;
         const val selectedItem_About = 6;
-        const val selectedItem_Subscription = 7;
         const val selectedItem_Exit = 8;  //仅遵循旧代码规范而加的这个变量，实际上点这个直接退出，不会切换页面，也不会记住最后退出页面
+        const val selectedItem_SshKeys = 9;
 
         const val errorCantGetExternalDir = "Error: Can't Get App's External Dir"
         const val errorCantGetExternalCacheDir = "Error: Can't Get App's External Cache Dir"

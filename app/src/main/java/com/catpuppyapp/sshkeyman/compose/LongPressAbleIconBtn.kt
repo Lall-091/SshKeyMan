@@ -22,7 +22,7 @@ import androidx.compose.ui.hapticfeedback.HapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
-import com.catpuppyapp.sshkeyman.ui.theme.Theme
+import com.catpuppyapp.sshkeyman.theme.Theme
 import com.catpuppyapp.sshkeyman.utils.AppModel
 import com.catpuppyapp.sshkeyman.utils.UIHelper
 import com.catpuppyapp.sshkeyman.utils.showToast

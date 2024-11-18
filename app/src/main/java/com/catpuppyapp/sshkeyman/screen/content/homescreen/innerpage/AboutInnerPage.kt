@@ -29,8 +29,8 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.catpuppyapp.sshkeyman.R
 import com.catpuppyapp.sshkeyman.compose.PaddingRow
-import com.catpuppyapp.sshkeyman.play.pro.R
 import com.catpuppyapp.sshkeyman.style.MyStyleKt
 import com.catpuppyapp.sshkeyman.utils.ActivityUtil
 import com.catpuppyapp.sshkeyman.utils.AppModel
@@ -44,7 +44,7 @@ const val authorMailLink = "mailto:$authorMail"
 const val madeBy = "Made by Bandeapart1964 of catpuppyapp"
 const val madeByLink = "https://github.com/Bandeapart1964"
 
-const val sourceCodeLink = "https://github.com/catpuppyapp/PuppyGit"
+const val sourceCodeLink = "https://github.com/catpuppyapp/PuppySshKeyMan"
 const val privacyPolicyLink = "$sourceCodeLink/blob/main/PrivacyPolicy.md"
 const val discussionLink = "$sourceCodeLink/discussions"
 const val reportBugsLink = "$sourceCodeLink/issues/new"
@@ -60,11 +60,8 @@ data class OpenSource(
     val licenseLink:String,
 )
 
-private val openSourceList= listOf(
-    OpenSource(projectName = "Libgit2", projectLink = "https://github.com/libgit2/libgit2", licenseLink = "https://raw.githubusercontent.com/libgit2/libgit2/main/COPYING"),
-    OpenSource(projectName = "Git24j", projectLink = "https://github.com/git24j/git24j", licenseLink = "https://raw.githubusercontent.com/git24j/git24j/master/LICENSE"),
-    OpenSource(projectName = "text-editor-compose", projectLink = "https://github.com/kaleidot725/text-editor-compose", licenseLink = "https://raw.githubusercontent.com/kaleidot725/text-editor-compose/main/LICENSE"),
-    OpenSource(projectName = "OpenSSL", projectLink = "https://github.com/openssl/openssl", licenseLink = "https://raw.githubusercontent.com/openssl/openssl/master/LICENSE.txt"),
+private val openSourceList= listOf<OpenSource>(
+//    OpenSource(projectName = "Libgit2", projectLink = "https://github.com/libgit2/libgit2", licenseLink = "https://raw.githubusercontent.com/libgit2/libgit2/main/COPYING"),
 )
 
 @Composable

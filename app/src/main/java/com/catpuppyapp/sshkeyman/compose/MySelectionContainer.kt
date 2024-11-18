@@ -5,7 +5,7 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import com.catpuppyapp.sshkeyman.style.MyStyleKt
-import com.catpuppyapp.sshkeyman.ui.theme.Theme
+import com.catpuppyapp.sshkeyman.theme.Theme
 
 
 @Composable

@@ -71,6 +71,15 @@ class SshKeyRepositoryImpl(private val dao: SshKeyDao) : SshKeyRepository {
         dao.updateName(id, name)
     }
 
+    override suspend fun getAllNoDecrypt(): List<SshKeyEntity> {
+        return dao.getAll()
+    }
+
+    override suspend fun updateNoEncrypt(item: SshKeyEntity) {
+        item.baseFields.baseUpdateTime = getSecFromTime()
+        dao.update(item)
+    }
+
     override suspend fun getIdByNameAndExcludeId(name: String, excludeId: String): String? {
         return dao.getIdByNameAndExcludeId(name, excludeId)
     }

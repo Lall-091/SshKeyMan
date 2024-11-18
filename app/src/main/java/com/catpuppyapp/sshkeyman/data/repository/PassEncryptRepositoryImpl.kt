@@ -63,7 +63,7 @@ class PassEncryptRepositoryImpl(private val dao: PassEncryptDao) : PassEncryptRe
             val oldEncryptor = PassEncryptHelper.encryptorMap.get(ver)!!  //旧加密器
 
             //获取数据库中的原始内容，没加密也没解密的版本，正常来说取出的应该是加密过的pass字段，除非存的时候调错了方法
-            val allCredentialList = sshkeyDb.getAll()
+            val allCredentialList = sshkeyDb.getAllNoDecrypt()
 
             //开事务，避免部分成功部分失误导致密码乱套，如果乱套只能把credential全删了重建了
             AppModel.singleInstanceHolder.dbContainer.db.withTransaction {
@@ -75,7 +75,7 @@ class PassEncryptRepositoryImpl(private val dao: PassEncryptDao) : PassEncryptRe
                     }
                     val raw = oldEncryptor.decrypt(c.passphrase, oldKey)  //解密密码
                     c.passphrase = PassEncryptHelper.encryptWithCurrentEncryptor(raw)  //用新加密器加密密码
-                    sshkeyDb.update(c)  //更新db
+                    sshkeyDb.updateNoEncrypt(c)  //更新db
                 }
 
                 //更新passEncryptEntity

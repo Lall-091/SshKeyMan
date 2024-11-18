@@ -49,6 +49,8 @@ interface SshKeyRepository {
 
 
     suspend fun updateName(id:String, name: String)
+    suspend fun getAllNoDecrypt():List<SshKeyEntity>
+    suspend fun updateNoEncrypt(item: SshKeyEntity)
 
 
 }

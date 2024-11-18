@@ -31,7 +31,6 @@ import com.catpuppyapp.sshkeyman.data.entity.SshKeyEntity
 //entities是个数组，多个表多个类可直接写个逗号分隔列表
 @Database(entities = [
                         SshKeyEntity::class,
-                        CredentialEntity::class,
                         PassEncryptEntity::class,
                      ],
     version = 1,
@@ -46,7 +45,6 @@ import com.catpuppyapp.sshkeyman.data.entity.SshKeyEntity
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun repoDao(): SshKeyDao
-    abstract fun credentialDao(): CredentialDao
     abstract fun passEncryptDao(): PassEncryptDao
 
     companion object {

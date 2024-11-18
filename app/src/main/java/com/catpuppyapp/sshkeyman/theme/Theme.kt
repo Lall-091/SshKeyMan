@@ -1,4 +1,4 @@
-package com.catpuppyapp.sshkeyman.ui.theme
+package com.catpuppyapp.sshkeyman.theme
 
 import android.app.Activity
 import android.content.Context
@@ -16,7 +16,14 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.catpuppyapp.sshkeyman.play.pro.R
+import com.catpuppyapp.sshkeyman.R
+import com.catpuppyapp.sshkeyman.ui.theme.Pink40
+import com.catpuppyapp.sshkeyman.ui.theme.Pink80
+import com.catpuppyapp.sshkeyman.ui.theme.Purple40
+import com.catpuppyapp.sshkeyman.ui.theme.Purple80
+import com.catpuppyapp.sshkeyman.ui.theme.PurpleGrey40
+import com.catpuppyapp.sshkeyman.ui.theme.PurpleGrey80
+import com.catpuppyapp.sshkeyman.ui.theme.Typography
 
 object Theme {
     val Orange = Color(0xFFFF5722)
@@ -91,13 +98,13 @@ fun CatPuppyAppAndroidTheme(
                 Theme.inDarkTheme = true;
                 dynamicDarkColorScheme(context)
             }else {
-                Theme.inDarkTheme=false
+                Theme.inDarkTheme =false
                 dynamicLightColorScheme(context)
             }
         }
 
         darkTheme -> {
-            Theme.inDarkTheme=true;
+            Theme.inDarkTheme =true;
             DarkColorScheme
         }
 

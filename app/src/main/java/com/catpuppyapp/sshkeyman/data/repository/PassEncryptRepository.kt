@@ -44,6 +44,6 @@ interface PassEncryptRepository {
     /**
      * 如果更新密钥，需要执行此方法把数据库里的密码全部重新用新密钥加密一次
      */
-    suspend fun migrateIfNeed(credentialDb:CredentialRepository)
+    suspend fun migrateIfNeed(sshKeyDb:SshKeyRepository)
 
 }

@@ -17,7 +17,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.catpuppyapp.sshkeyman.style.MyStyleKt
-import com.catpuppyapp.sshkeyman.ui.theme.Theme
+import com.catpuppyapp.sshkeyman.theme.Theme
 
 
 @Composable

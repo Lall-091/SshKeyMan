@@ -6,9 +6,9 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Inventory
+import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -34,19 +34,18 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.catpuppyapp.sshkeyman.R
 import com.catpuppyapp.sshkeyman.compose.LongPressAbleIconBtn
 import com.catpuppyapp.sshkeyman.constants.Cons
 import com.catpuppyapp.sshkeyman.data.entity.SshKeyEntity
 import com.catpuppyapp.sshkeyman.screen.content.homescreen.innerpage.AboutInnerPage
-import com.catpuppyapp.sshkeyman.screen.content.homescreen.innerpage.RepoInnerPage
-import com.catpuppyapp.sshkeyman.screen.content.homescreen.scaffold.actions.RepoPageActions
+import com.catpuppyapp.sshkeyman.screen.content.homescreen.innerpage.SshKeyInnerPage
+import com.catpuppyapp.sshkeyman.screen.content.homescreen.scaffold.actions.SshKeyPageActions
 import com.catpuppyapp.sshkeyman.screen.content.homescreen.scaffold.drawer.drawerContent
 import com.catpuppyapp.sshkeyman.screen.content.homescreen.scaffold.title.AboutTitle
-import com.catpuppyapp.sshkeyman.screen.content.homescreen.scaffold.title.ReposTitle
 import com.catpuppyapp.sshkeyman.screen.content.homescreen.scaffold.title.SimpleTitle
+import com.catpuppyapp.sshkeyman.screen.content.homescreen.scaffold.title.SshKeyTitle
 import com.catpuppyapp.sshkeyman.style.MyStyleKt
 import com.catpuppyapp.sshkeyman.utils.AppModel
 import com.catpuppyapp.sshkeyman.utils.Msg
@@ -85,41 +84,37 @@ fun HomeScreen(
 
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = MyStyleKt.BottomSheet.skipPartiallyExpanded)
     val showBottomSheet = rememberSaveable { mutableStateOf(false)}
+    val showCreateSshKeyDialog = rememberSaveable { mutableStateOf(false)}
 
     //替换成我的cusntomstateSaver，然后把所有实现parcellzier的类都取消实现parcellzier，改成用我的saver
-    val repoPageCurRepo = mutableCustomStateOf(keyTag = stateKeyTag, keyName = "repoPageCurRepo", initValue = SshKeyEntity(id=""))  //id=空，表示无效仓库
+    val sshKeyPageCurItem = mutableCustomStateOf(keyTag = stateKeyTag, keyName = "sshKeyPageCurItem", initValue = SshKeyEntity(id=""))  //id=空，表示无效仓库
     //使用前检查，大于等于0才是有效索引
-    val repoPageCurRepoIndex = remember { mutableIntStateOf(-1)}
+    val sshKeyPageCurItemIndex = remember { mutableIntStateOf(-1)}
 
 
-    val repoPageFilterKeyWord =mutableCustomStateOf(
-        keyTag = stateKeyTag,
-        keyName = "repoPageFilterKeyWord",
-        initValue = TextFieldValue("")
-    )
-    val repoPageFilterModeOn = rememberSaveable { mutableStateOf( false)}
-    val repoPageShowImportRepoDialog = rememberSaveable { mutableStateOf(false)}
+    val sshKeyList = mutableCustomStateListOf(stateKeyTag, "sshKeyList") { listOf<SshKeyEntity>() }
 
 
-    val repoList = mutableCustomStateListOf(stateKeyTag, "repoList") { listOf<SshKeyEntity>() }
-
-
-    val needRefreshRepoPage = rememberSaveable { mutableStateOf("") }
+    val needRefreshSshKeyPage = rememberSaveable { mutableStateOf("") }
     val drawTextList = listOf(
-        stringResource(id = R.string.repos),
+        stringResource(id = R.string.sshkeys),
         stringResource(id = R.string.about),
+        stringResource(id = R.string.exit),
     )
     val drawIdList = listOf(
-        Cons.selectedItem_Repos,
+        Cons.selectedItem_SshKeys,
         Cons.selectedItem_About,
+        Cons.selectedItem_Exit
     )
     val drawIconList = listOf(
-        Icons.Filled.Inventory,
+        Icons.Filled.Key,
         Icons.Filled.Info,
+        Icons.AutoMirrored.Filled.ExitToApp
     )
     val refreshPageList = listOf(
-        refreshRepoPage@{ changeStateTriggerRefreshPage(needRefreshRepoPage) },
+        refreshSshKeyPage@{ changeStateTriggerRefreshPage(needRefreshSshKeyPage) },
         refreshAboutPage@{}, //About页面静态的，不需要刷新
+        exit@{AppModel.singleInstanceHolder.exitApp()}
     )
 
     val openDrawer = {  //打开侧栏(抽屉)
@@ -171,8 +166,8 @@ fun HomeScreen(
                         titleContentColor = MaterialTheme.colorScheme.primary,
                     ),
                     title = {
-                        if(currentHomeScreen.intValue == Cons.selectedItem_Repos){
-                            ReposTitle(repoPageListState, scope)
+                        if(currentHomeScreen.intValue == Cons.selectedItem_SshKeys){
+                            SshKeyTitle(repoPageListState, scope)
                         }else if (currentHomeScreen.intValue == Cons.selectedItem_About) {
                             AboutTitle()
                         } else {
@@ -180,57 +175,45 @@ fun HomeScreen(
                         }
                     },
                     navigationIcon = {
-                    if(currentHomeScreen.intValue == Cons.selectedItem_Repos && repoPageFilterModeOn.value){
-                        LongPressAbleIconBtn(
-                            tooltipText = stringResource(R.string.close),
-                            icon =  Icons.Filled.Close,
-                            iconContentDesc = stringResource(R.string.close),
 
-                            ) {
-                            repoPageFilterModeOn.value=false
-                        }
-                    }else {
-                            LongPressAbleIconBtn(
-                                tooltipText = stringResource(R.string.menu),
-                                icon = Icons.Filled.Menu,
-                                iconContentDesc = stringResource(R.string.menu),
-                            ) {
-                                scope.launch {
-                                    drawerState.apply {
-                                        if (isClosed) open() else close()
-                                    }
+                        LongPressAbleIconBtn(
+                            tooltipText = stringResource(R.string.menu),
+                            icon = Icons.Filled.Menu,
+                            iconContentDesc = stringResource(R.string.menu),
+                        ) {
+                            scope.launch {
+                                drawerState.apply {
+                                    if (isClosed) open() else close()
                                 }
                             }
-
                         }
+
 
                     },
                     actions = {
-                        if(currentHomeScreen.intValue == Cons.selectedItem_Repos) {
-                            if(!repoPageFilterModeOn.value){
-                                RepoPageActions(navController, repoPageCurRepo, needRefreshRepoPage,
-                                    repoPageFilterModeOn, repoPageFilterKeyWord,
-                                    showImportRepoDialog = repoPageShowImportRepoDialog
-                                )
-                            }
+                        if(currentHomeScreen.intValue == Cons.selectedItem_SshKeys) {
+                            SshKeyPageActions(navController, sshKeyPageCurItem, needRefreshSshKeyPage,
+                                showCreateSshKeyDialog
+                            )
                         }
                     },
                     scrollBehavior = homeTopBarScrollBehavior,
                 )
             }
         ) { contentPadding ->
-            if(currentHomeScreen.intValue == Cons.selectedItem_Repos) {
+            if(currentHomeScreen.intValue == Cons.selectedItem_SshKeys) {
 //                changeStateTriggerRefreshPage(needRefreshRepoPage)
-                RepoInnerPage(
-                    showBottomSheet,
-                    sheetState,
-                    repoPageCurRepo,
-                    repoPageCurRepoIndex,
-                    contentPadding,
-                    repoPageListState,
-                    openDrawer,
-                    repoList,
-                    needRefreshRepoPage
+                SshKeyInnerPage(
+                    showBottomSheet = showBottomSheet,
+                    sheetState = sheetState,
+                    curRepo = sshKeyPageCurItem,
+                    curRepoIndex = sshKeyPageCurItemIndex,
+                    contentPadding = contentPadding,
+                    listState = repoPageListState,
+                    openDrawer = openDrawer,
+                    repoList = sshKeyList,
+                    needRefreshPage = needRefreshSshKeyPage,
+                    showCreateSshKeyDialog
                 )
 
             }else if(currentHomeScreen.intValue == Cons.selectedItem_About) {

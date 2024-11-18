@@ -106,6 +106,9 @@ android {
         resources {
             //别用 `excludes+=xxxxx` 语法，看着太像拼接字符串，实际上excludes是集合
             excludes.add("/META-INF/{AL2.0,LGPL2.1}")
+            excludes.add("/META-INF/versions/9/OSGI-INF/MANIFEST.MF")
+            excludes.add("/META-INF/versions/15/OSGI-INF/MANIFEST.MF")
+            excludes.add("/META-INF/versions/11/OSGI-INF/MANIFEST.MF")
 //            //不知道为什么，引入包含 SubscriptionPurchaseV2 的依赖 google-api-services-androidpublisher 后，会报错，排除这两个东西就不报错了，意义不明
 //            excludes.add("META-INF/INDEX.LIST")
 //            excludes.add("META-INF/DEPENDENCIES")
@@ -117,6 +120,14 @@ android {
 }
 
 dependencies {
+// https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk18on
+    implementation("org.bouncycastle:bcprov-jdk18on:1.79")
+    implementation("org.bouncycastle:bcpkix-jdk18on:1.79")
+
+// https://mvnrepository.com/artifact/com.github.mwiede/jsch
+    implementation("com.github.mwiede:jsch:0.2.21")
+
+
     //billing
 //    implementation ("com.android.billingclient:billing-ktx:7.0.0")
 

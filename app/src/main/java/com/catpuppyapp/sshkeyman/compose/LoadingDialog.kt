@@ -20,8 +20,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.catpuppyapp.sshkeyman.play.pro.R
-import com.catpuppyapp.sshkeyman.ui.theme.Theme
+import com.catpuppyapp.sshkeyman.R
+import com.catpuppyapp.sshkeyman.theme.Theme
 import com.catpuppyapp.sshkeyman.utils.AppModel
 
 

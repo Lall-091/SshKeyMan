@@ -35,12 +35,14 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.catpuppyapp.sshkeyman.R
+import com.catpuppyapp.sshkeyman.compose.ConfirmDialog2
 import com.catpuppyapp.sshkeyman.compose.MyLazyColumn
-import com.catpuppyapp.sshkeyman.compose.RepoCard
+import com.catpuppyapp.sshkeyman.compose.ScrollableColumn
+import com.catpuppyapp.sshkeyman.compose.SshKeyItem
 import com.catpuppyapp.sshkeyman.data.AppContainer
 import com.catpuppyapp.sshkeyman.data.entity.SshKeyEntity
 import com.catpuppyapp.sshkeyman.style.MyStyleKt
-import com.catpuppyapp.sshkeyman.ui.theme.Theme
+import com.catpuppyapp.sshkeyman.theme.Theme
 import com.catpuppyapp.sshkeyman.utils.ActivityUtil
 import com.catpuppyapp.sshkeyman.utils.AppModel
 import com.catpuppyapp.sshkeyman.utils.ComposeHelper
@@ -48,21 +50,22 @@ import com.catpuppyapp.sshkeyman.utils.doJobThenOffLoading
 import com.catpuppyapp.sshkeyman.utils.state.CustomStateListSaveable
 import com.catpuppyapp.sshkeyman.utils.state.CustomStateSaveable
 
-private val TAG = "RepoInnerPage"
-private val stateKeyTag = "RepoInnerPage"
+private val TAG = "SshKeyInnerPage"
+private val stateKeyTag = "SshKeyInnerPage"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RepoInnerPage(
+fun SshKeyInnerPage(
     showBottomSheet: MutableState<Boolean>,
     sheetState: SheetState,
     curRepo: CustomStateSaveable<SshKeyEntity>,
     curRepoIndex: MutableIntState,
     contentPadding: PaddingValues,
-    repoPageListState: LazyListState,
+    listState: LazyListState,
     openDrawer:() -> Unit,
     repoList:CustomStateListSaveable<SshKeyEntity>,
-    needRefreshPage:MutableState<String>
+    needRefreshPage:MutableState<String>,
+    showCreateDialog:MutableState<Boolean>
 ) {
     val activityContext = AppModel.singleInstanceHolder.activityContext;
     val exitApp = AppModel.singleInstanceHolder.exitApp;
@@ -104,7 +107,20 @@ fun RepoInnerPage(
         loadingText.value = ""
     }
 
-    val showCreateDialog = rememberSaveable { mutableStateOf(false) }
+
+    if(showCreateDialog.value) {
+        ConfirmDialog2(
+            requireShowTextCompose = true,
+            textCompose = {
+                ScrollableColumn {
+
+                }
+            },
+            onCancel = {showCreateDialog.value = false}
+        ) {
+
+        }
+    }
 
 
     if (!isLoading.value && repoList.value.isEmpty()) {  //无仓库，显示添加按钮
@@ -129,12 +145,12 @@ fun RepoInnerPage(
                 Row{
                     Icon(modifier = Modifier.size(50.dp),
                         imageVector = Icons.Filled.Add,
-                        contentDescription = stringResource(R.string.add),
+                        contentDescription = stringResource(R.string.create),
                         tint = MyStyleKt.IconColor.normal
                     )
                 }
                 Row {
-                    Text(text = stringResource(id = R.string.add_a_repo),
+                    Text(text = stringResource(id = R.string.create_a_key),
                         style = MyStyleKt.ClickableText.style,
                         color = MyStyleKt.ClickableText.color,
                         fontSize = MyStyleKt.TextSize.default
@@ -151,17 +167,17 @@ fun RepoInnerPage(
         MyLazyColumn(
             contentPadding = contentPadding,
             list = repoList.value,
-            listState = repoPageListState,
+            listState = listState,
             requireForEachWithIndex = true,
             requirePaddingAtBottom = true
         ) {idx, element->
 
-            RepoCard(
+            SshKeyItem(
                 showBottomSheet,
                 curRepo,
                 curRepoIndex,
-                repoDto = element,
-                repoDtoIndex = idx,
+                element,
+                idx,
                 requireBlinkIdx = requireBlinkIdx,
 
             )

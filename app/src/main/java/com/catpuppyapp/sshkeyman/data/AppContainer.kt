@@ -28,7 +28,6 @@ import com.catpuppyapp.sshkeyman.data.repository.SshKeyRepositoryImpl
 interface AppContainer {
     val db:AppDatabase
     val sshKeyRepository: SshKeyRepository
-    val credentialRepository: CredentialRepository
     val passEncryptRepository: PassEncryptRepository
     // other repository write here
 }
@@ -45,9 +44,6 @@ class AppDataContainer(private val context: Context) : AppContainer {
         SshKeyRepositoryImpl(db.repoDao())
     }
 
-    override val credentialRepository: CredentialRepository by lazy {
-        CredentialRepositoryImpl(db.credentialDao())
-    }
     override val passEncryptRepository: PassEncryptRepository by lazy {
         PassEncryptRepositoryImpl(db.passEncryptDao())
     }

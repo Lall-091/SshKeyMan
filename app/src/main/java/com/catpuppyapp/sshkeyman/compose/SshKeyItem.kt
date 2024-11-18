@@ -1,6 +1,5 @@
 package com.catpuppyapp.sshkeyman.compose
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,7 +29,7 @@ import androidx.compose.ui.unit.sp
 import com.catpuppyapp.sshkeyman.R
 import com.catpuppyapp.sshkeyman.data.entity.SshKeyEntity
 import com.catpuppyapp.sshkeyman.style.MyStyleKt
-import com.catpuppyapp.sshkeyman.ui.theme.Theme
+import com.catpuppyapp.sshkeyman.theme.Theme
 import com.catpuppyapp.sshkeyman.utils.AppModel
 import com.catpuppyapp.sshkeyman.utils.Msg
 import com.catpuppyapp.sshkeyman.utils.UIHelper
@@ -41,7 +40,6 @@ import com.catpuppyapp.sshkeyman.utils.state.CustomStateSaveable
 import kotlinx.coroutines.delay
 
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SshKeyItem(
     showBottomSheet: MutableState<Boolean>,

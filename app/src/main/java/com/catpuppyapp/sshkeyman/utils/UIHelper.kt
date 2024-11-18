@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.catpuppyapp.sshkeyman.constants.Cons
 import com.catpuppyapp.sshkeyman.style.MyStyleKt
-import com.catpuppyapp.sshkeyman.ui.theme.Theme
+import com.catpuppyapp.sshkeyman.theme.Theme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -63,16 +63,16 @@ object UIHelper {
         }
     }
 
-    fun getFontColor(inDarkTheme:Boolean=Theme.inDarkTheme): Color {
+    fun getFontColor(inDarkTheme:Boolean= Theme.inDarkTheme): Color {
         return if(inDarkTheme) MyStyleKt.TextColor.darkThemeFontColor else MyStyleKt.TextColor.fontColor
     }
 
-    fun getDisableBtnColor(inDarkTheme: Boolean=Theme.inDarkTheme):Color {
+    fun getDisableBtnColor(inDarkTheme: Boolean= Theme.inDarkTheme):Color {
         return if(inDarkTheme) MyStyleKt.IconColor.disable_DarkTheme else MyStyleKt.IconColor.disable
     }
 
     //不太重要的字体颜色
-    fun getSecondaryFontColor(inDarkTheme:Boolean=Theme.inDarkTheme): Color {
+    fun getSecondaryFontColor(inDarkTheme:Boolean= Theme.inDarkTheme): Color {
         return if(inDarkTheme) MyStyleKt.TextColor.darkThemeSecondaryFontColor else MyStyleKt.TextColor.secondaryFontColor
     }
 

@@ -20,7 +20,9 @@ import com.catpuppyapp.sshkeyman.constants.Cons
 import com.catpuppyapp.sshkeyman.data.AppContainer
 import com.catpuppyapp.sshkeyman.data.AppDataContainer
 import kotlinx.coroutines.CoroutineScope
+import org.bouncycastle.jce.provider.BouncyCastleProvider
 import java.io.File
+import java.security.Security
 
 private val TAG ="AppModel"
 
@@ -46,6 +48,16 @@ class AppModel {
 
             if(inited_1.value.not()) {
                 inited_1.value = true
+
+                // 添加 Bouncy Castle 提供者
+//                Security.addProvider(BouncyCastleProvider())
+
+//                SshKeyUtil.testecd25519()
+                //test
+                val sshkeypair = SshKeyUtil.generateKeyPair("test1", SshKeyUtil.RSA2048, "mypass", "abc@email")
+                println("private key:\n ${sshkeypair.privateKey}")
+                println("public key:\n ${sshkeypair.publicKey}")
+                //test
 
                 //set dbHolder ，如果以后使用依赖注入框架，这个需要修改
                 appModel.dbContainer = AppDataContainer(realAppContext)
@@ -133,7 +145,7 @@ class AppModel {
                 //执行会suspend的初始化操作
                 //检查是否需要迁移密码
                 try {
-                    appModel.dbContainer.passEncryptRepository.migrateIfNeed(appModel.dbContainer.credentialRepository)
+                    appModel.dbContainer.passEncryptRepository.migrateIfNeed(appModel.dbContainer.sshKeyRepository)
                 }catch (e:Exception) {
                     MyLog.e(TAG, "#$funName migrate password err:"+e.stackTraceToString())
                     MyLog.w(TAG, "#$funName migrate password err, user's password may will be invalid :(")

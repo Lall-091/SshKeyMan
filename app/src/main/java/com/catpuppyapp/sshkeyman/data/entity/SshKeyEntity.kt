@@ -19,9 +19,14 @@ data class SshKeyEntity(
      *  a RepoEntity with blank name
      */
     var name: String = "",  //字段需唯一
+    var email:String ="",
     var publicKey:String="",
     var privateKey:String="",
     var passphrase:String="",
+    /**
+     * one of SshKeyUtil.algoList item
+     */
+    var algo:String="",
     var note:String="",  //备注
 
     @Embedded
