@@ -15,9 +15,9 @@ class SshKeyRepositoryImpl(private val dao: SshKeyDao) : SshKeyRepository {
     override suspend fun insert(item: SshKeyEntity) {
         val funName = "insert"
         if(isNameExist(item.name)) {
-            MyLog.w(TAG, "#$funName: warn: item's sshkeyName '${item.name}' already exists! operation abort...")
+            MyLog.w(TAG, "#$funName: warn: item's name '${item.name}' already exists! operation abort...")
 
-            throw RuntimeException("#$funName err: sshkeyName already exists")
+            throw RuntimeException("#$funName err: name already exists")
 
         }
 
@@ -34,8 +34,8 @@ class SshKeyRepositoryImpl(private val dao: SshKeyDao) : SshKeyRepository {
     override suspend fun update(item: SshKeyEntity, requeryAfterUpdate:Boolean) {
         val funName ="update"
         if(isNameAlreadyUsedByOtherItem(item.name, item.id)) {
-            MyLog.w(TAG, "#$funName: warn: item's sshkeyName '${item.name}' already used by other item! operation abort...")
-            throw RuntimeException("#$funName err: sshkeyName already exists")
+            MyLog.w(TAG, "#$funName: warn: item's name '${item.name}' already used by other item! operation abort...")
+            throw RuntimeException("#$funName err: name already exists")
 
         }
 

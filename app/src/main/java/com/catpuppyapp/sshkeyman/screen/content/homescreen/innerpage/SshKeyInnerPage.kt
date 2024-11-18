@@ -9,17 +9,27 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableIntState
@@ -33,6 +43,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.catpuppyapp.sshkeyman.R
 import com.catpuppyapp.sshkeyman.compose.ConfirmDialog2
@@ -46,6 +60,10 @@ import com.catpuppyapp.sshkeyman.theme.Theme
 import com.catpuppyapp.sshkeyman.utils.ActivityUtil
 import com.catpuppyapp.sshkeyman.utils.AppModel
 import com.catpuppyapp.sshkeyman.utils.ComposeHelper
+import com.catpuppyapp.sshkeyman.utils.Msg
+import com.catpuppyapp.sshkeyman.utils.MyLog
+import com.catpuppyapp.sshkeyman.utils.SshKeyUtil
+import com.catpuppyapp.sshkeyman.utils.changeStateTriggerRefreshPage
 import com.catpuppyapp.sshkeyman.utils.doJobThenOffLoading
 import com.catpuppyapp.sshkeyman.utils.state.CustomStateListSaveable
 import com.catpuppyapp.sshkeyman.utils.state.CustomStateSaveable
@@ -107,6 +125,13 @@ fun SshKeyInnerPage(
         loadingText.value = ""
     }
 
+    val name = rememberSaveable { mutableStateOf("") }
+    val email = rememberSaveable { mutableStateOf("") }
+    val passphrase = rememberSaveable { mutableStateOf("") }
+    val passwordVisible = rememberSaveable { mutableStateOf(false) }
+
+    val algoList = SshKeyUtil.algoList
+    val selectedAlgo = rememberSaveable { mutableIntStateOf(0) }
 
     if(showCreateDialog.value) {
         ConfirmDialog2(
@@ -114,10 +139,109 @@ fun SshKeyInnerPage(
             textCompose = {
                 ScrollableColumn {
 
+                    TextField(
+                        value = name.value,
+                        onValueChange = {
+                            name.value = it
+                        },
+                        singleLine = true,
+                        label = {
+                            Text(stringResource(R.string.name))
+                        },
+                    )
+
+                    TextField(
+                        value = email.value,
+                        onValueChange = {
+                            email.value = it
+                        },
+                        singleLine = true,
+                        label = {
+                            Text(stringResource(R.string.email))
+                        },
+                    )
+
+                    TextField(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(10.dp),
+//                    singleLine = true,
+                        value = passphrase.value,
+                        onValueChange = {
+                            passphrase.value=it
+                        },
+
+                        visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                        trailingIcon = {
+                            val image = if (passwordVisible.value) Icons.Filled.Visibility
+                            else Icons.Filled.VisibilityOff
+
+                            // Please provide localized description for accessibility services
+                            val description =
+                                if (passwordVisible.value) stringResource(R.string.hide) else stringResource(
+                                    R.string.show
+                                )
+
+                            IconButton(onClick = { passwordVisible.value = !passwordVisible.value }) {
+                                // contentDescription is for accessibility
+                                Icon(imageVector = image, contentDescription = description)
+                            }
+                        }
+
+                    )
+
+
+                    for ((k, optext) in algoList.withIndex()) {
+                        Row(
+                            Modifier
+                                .fillMaxWidth()
+                                .heightIn(min = MyStyleKt.RadioOptions.minHeight)
+
+                                .selectable(
+                                    selected = selectedAlgo.intValue == k,
+                                    onClick = {
+                                        //更新选择值
+                                        selectedAlgo.intValue = k
+                                    },
+                                    role = Role.RadioButton
+                                )
+                                .padding(horizontal = 10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            RadioButton(
+                                selected = selectedAlgo.intValue == k,
+                                onClick = null // null recommended for accessibility with screenreaders
+                            )
+                            Text(
+                                text = optext,
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.padding(start = 10.dp)
+                            )
+                        }
+                    }
+
                 }
             },
+            okBtnEnabled = name.value.isNotBlank() && selectedAlgo.intValue>=0 && selectedAlgo.intValue<algoList.size,
             onCancel = {showCreateDialog.value = false}
         ) {
+            showCreateDialog.value = false
+            doJobThenOffLoading {
+                try {
+                    val algo = algoList[selectedAlgo.intValue]
+                    val sshKeyEntity = SshKeyUtil.createSshKeyEntity(name.value, algo, passphrase.value, email.value)
+                    AppModel.singleInstanceHolder.dbContainer.sshKeyRepository.insert(sshKeyEntity)
+                    Msg.requireShow(activityContext.getString(R.string.success))
+                    email.value = ""
+                    passphrase.value = ""
+                    name.value = ""
+                    changeStateTriggerRefreshPage(needRefreshPage)
+                }catch (e:Exception) {
+                    Msg.requireShowLongDuration(e.localizedMessage ?:"unknown err")
+                    MyLog.e(TAG, "create ssh key pair err: ${e.stackTraceToString()}")
+                }
+            }
 
         }
     }

@@ -47,5 +47,10 @@
     <string name="info">info</string>
     <string name="debug">debug</string>
     <string name="verbose">verbose</string>
+    <string name="email">Email</string>
+    <string name="hide">Hide</string>
+    <string name="show">Show</string>
+    <string name="name">Name</string>
+    <string name="success">Success</string>
 
 </resources>

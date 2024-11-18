@@ -48,7 +48,13 @@ object SshKeyUtil {
     private fun writePrivateAndPublicKey(privateKeyOutStream: OutputStream, publicKeyOutStream: OutputStream, passphrase: String, keyType:Int, keyLen:Int, email:String) {
         val jsch = JSch()
         val keyPair: KeyPair = KeyPair.genKeyPair(jsch, keyType, keyLen)
-        keyPair.writePrivateKey(privateKeyOutStream, passphrase.toByteArray())
+
+        if(passphrase.isNotEmpty()) {
+            keyPair.writePrivateKey(privateKeyOutStream, passphrase.toByteArray())
+        }else {
+            keyPair.writePrivateKey(privateKeyOutStream)
+        }
+
         keyPair.writePublicKey(publicKeyOutStream, email)
     }
 
