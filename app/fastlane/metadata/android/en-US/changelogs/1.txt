@@ -1,0 +1,1 @@
+- support generate ed25519/rsa/ecdsa ssh key pair
