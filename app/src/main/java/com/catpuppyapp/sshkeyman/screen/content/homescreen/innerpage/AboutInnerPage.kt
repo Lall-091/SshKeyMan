@@ -48,7 +48,7 @@ const val sourceCodeLink = "https://github.com/catpuppyapp/PuppySshKeyMan"
 const val privacyPolicyLink = "$sourceCodeLink/blob/main/PrivacyPolicy.md"
 const val discussionLink = "$sourceCodeLink/discussions"
 const val reportBugsLink = "$sourceCodeLink/issues/new"
-const val donateLink = "$sourceCodeLink/blob/main/donate.md"
+const val donateLink = "https://github.com/catpuppyapp/PuppyGit/blob/main/donate.md"
 
 
 var versionCode: Int = AppModel.getAppVersionCode()
