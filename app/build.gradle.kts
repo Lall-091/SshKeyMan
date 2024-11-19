@@ -121,13 +121,13 @@ android {
 
 dependencies {
 // https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk18on
-//    implementation("org.bouncycastle:bcprov-jdk18on:1.79")
-//    implementation("org.bouncycastle:bcpkix-jdk18on:1.79")
+    implementation("org.bouncycastle:bcprov-jdk18on:1.79")
+    implementation("org.bouncycastle:bcpkix-jdk18on:1.79")
     implementation("com.github.mwiede:jsch:0.2.21")
 // https://mvnrepository.com/artifact/com.sshtools/maverick-bc
-//    implementation("com.sshtools:maverick-bc:3.1.2")
+    implementation("com.sshtools:maverick-bc:3.1.2")
 // https://mvnrepository.com/artifact/com.sshtools/maverick-synergy-client
-//    implementation("com.sshtools:maverick-synergy-client:3.1.2")
+    implementation("com.sshtools:maverick-synergy-client:3.1.2")
 
 
 

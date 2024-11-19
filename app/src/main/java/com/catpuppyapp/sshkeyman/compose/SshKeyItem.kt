@@ -228,7 +228,7 @@ fun SshKeyItem(
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(text = stringResource(R.string.detais) + ":")
+                    Text(text = stringResource(R.string.details) + ":")
                     Text(
                         text = stringResource(R.string.click_to_view),
                         maxLines = 1,
@@ -252,6 +252,20 @@ fun SshKeyItem(
                         },
 
                         )
+                }
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = stringResource(R.string.algo) + ":")
+                    Text(
+                        text = curItemDto.algo,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontWeight = FontWeight.Light,
+                        modifier = MyStyleKt.NormalText.modifier,
+
+                    )
                 }
 
                 Row(

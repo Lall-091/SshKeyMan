@@ -12,7 +12,7 @@
     <string name="click_to_copy">click to copy</string>
     <string name="privatekey">PrivateKey</string>
     <string name="update_time">UpdateTime</string>
-    <string name="detais">details</string>
+    <string name="details">Details</string>
     <string name="click_to_view">click to view</string>
     <string name="passphrase">Passphrase</string>
     <string name="err_restart_app_may_resolve">err: restart app may resolve</string>
@@ -52,5 +52,6 @@
     <string name="show">Show</string>
     <string name="name">Name</string>
     <string name="success">Success</string>
+    <string name="algo">Algo</string>
 
 </resources>

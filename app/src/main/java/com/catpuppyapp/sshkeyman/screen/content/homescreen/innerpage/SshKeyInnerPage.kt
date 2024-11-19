@@ -64,9 +64,10 @@ import com.catpuppyapp.sshkeyman.utils.AppModel
 import com.catpuppyapp.sshkeyman.utils.ComposeHelper
 import com.catpuppyapp.sshkeyman.utils.Msg
 import com.catpuppyapp.sshkeyman.utils.MyLog
-import com.catpuppyapp.sshkeyman.utils.SshKeyUtil
+import com.catpuppyapp.sshkeyman.utils.sshkey.SkmSshKeyUtil
 import com.catpuppyapp.sshkeyman.utils.changeStateTriggerRefreshPage
 import com.catpuppyapp.sshkeyman.utils.doJobThenOffLoading
+import com.catpuppyapp.sshkeyman.utils.sshkey.SkmKeyPairGenerator
 import com.catpuppyapp.sshkeyman.utils.state.CustomStateListSaveable
 import com.catpuppyapp.sshkeyman.utils.state.CustomStateSaveable
 
@@ -132,7 +133,7 @@ fun SshKeyInnerPage(
     val passphrase = rememberSaveable { mutableStateOf("") }
     val passwordVisible = rememberSaveable { mutableStateOf(false) }
 
-    val algoList = SshKeyUtil.algoList
+    val algoList = SkmKeyPairGenerator.algoList
     val selectedAlgo = rememberSaveable { mutableIntStateOf(0) }
 
     val spacerHeight = remember {15.dp}
@@ -241,7 +242,7 @@ fun SshKeyInnerPage(
             doJobThenOffLoading {
                 try {
                     val algo = algoList[selectedAlgo.intValue]
-                    val sshKeyEntity = SshKeyUtil.createSshKeyEntity(name.value, algo, passphrase.value, email.value)
+                    val sshKeyEntity = SkmSshKeyUtil.createSshKeyEntity(name.value, algo, passphrase.value, email.value)
                     AppModel.singleInstanceHolder.dbContainer.sshKeyRepository.insert(sshKeyEntity)
                     Msg.requireShow(activityContext.getString(R.string.success))
                     email.value = ""

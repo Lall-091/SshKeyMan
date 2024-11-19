@@ -30,6 +30,8 @@ import com.catpuppyapp.sshkeyman.utils.doJobThenOffLoading
 import com.catpuppyapp.sshkeyman.utils.showToast
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.channels.Channel
+import org.bouncycastle.jce.provider.BouncyCastleProvider
+import java.security.Security
 import java.util.Locale
 
 
@@ -52,6 +54,13 @@ private val TAG = "MainActivity"
 //}
 
 class MainActivity : ComponentActivity() {
+    companion object {
+        init {
+            // must remove androind default BC, then add ours
+            Security.removeProvider(BouncyCastleProvider.PROVIDER_NAME)
+            Security.addProvider(BouncyCastleProvider())
+        }
+    }
 
     @OptIn(ExperimentalComposeUiApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {

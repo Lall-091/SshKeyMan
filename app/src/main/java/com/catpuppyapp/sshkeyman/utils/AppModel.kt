@@ -77,6 +77,17 @@ class AppModel {
             }
 
 
+            // for avoid sshtools get NPE......., even this 'logging.properties' file doesn't exist yet
+            System.setProperty("maverick.log.config", "${appModel.externalCacheDir.canonicalPath}/sshtools.logging.properties")
+
+            //test start
+//            println("isBouncyCastleRegistered: ${isBouncyCastleRegistered()}")
+//            Security.removeProvider(BouncyCastleProvider.PROVIDER_NAME)
+//            Security.addProvider(BouncyCastleProvider())
+
+//            val sshKeyEntity = SshKeyUtil.createSshKeyEntity("test ed255", SshKeyUtil.ED25529, "test", "test")
+//            println(sshKeyEntity)
+            //test end
 
 
 //            AppModel.singleInstanceHolder.logDir = createLogDirIfNonexists(externalCacheDir, Cons.defaultLogDirName);
