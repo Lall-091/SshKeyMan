@@ -56,7 +56,7 @@ private val TAG = "MainActivity"
 class MainActivity : ComponentActivity() {
     companion object {
         init {
-            // must remove androind default BC, then add ours
+            // must remove android default BC, then add ours
             Security.removeProvider(BouncyCastleProvider.PROVIDER_NAME)
             Security.addProvider(BouncyCastleProvider())
         }

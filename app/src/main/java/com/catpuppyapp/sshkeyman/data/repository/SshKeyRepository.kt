@@ -19,7 +19,7 @@ package com.catpuppyapp.sshkeyman.data.repository
 import com.catpuppyapp.sshkeyman.data.entity.SshKeyEntity
 
 /**
- * passphrase 写的时候加密，查的时候自动解密
+ * 注：所有api，除了明确标注是否加密解密的，都默认 查passphrase 解密，存的时候加密
  */
 interface SshKeyRepository {
     /**
