@@ -5,7 +5,7 @@ feature:
 generate ed25519/ecdsap256/rsa ssh keys
 
 ## Author
-PuppyGit made by Bandeapart1964 of catpuppyapp
+SshKeyMan made by Bandeapart1964 of catpuppyapp
 
 ### SshKeyMan is a free app, but if it helpful to you, please consider Star + <a href=https://github.com/catpuppyapp/PuppyGit/blob/main/donate.md>Donate</a>, it will help this project long live.
 
