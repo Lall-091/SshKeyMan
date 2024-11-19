@@ -16,7 +16,7 @@ SshKeyMan made by Bandeapart1964 of catpuppyapp
 
 
 <div>
-<img src="fastlane/metadata/android/en-US/images/1.png" width=150 />
-<img src="fastlane/metadata/android/en-US/images/2.png" width=150 />
-<img src="fastlane/metadata/android/en-US/images/3.png" width=150 />
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width=150 />
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width=150 />
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width=150 />
 </div>
