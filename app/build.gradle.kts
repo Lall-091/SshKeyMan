@@ -76,7 +76,9 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = !project.hasProperty("disableMinify")
+//            isMinifyEnabled = !project.hasProperty("disableMinify")
+            //没必要开混淆了，都开源了，混不混无所谓了，开了混淆还得排除一些类，不然可能报错，麻烦
+            isMinifyEnabled = false
             isShrinkResources = !project.hasProperty("disableShrinkRes")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
