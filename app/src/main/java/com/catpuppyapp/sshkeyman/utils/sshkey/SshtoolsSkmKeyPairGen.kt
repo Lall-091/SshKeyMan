@@ -1,9 +1,9 @@
 package com.catpuppyapp.sshkeyman.utils.sshkey
 
-import com.catpuppyapp.sshkeyman.utils.FsUtils
 import com.sshtools.common.publickey.SshKeyPairGenerator
-import com.sshtools.common.publickey.SshKeyUtils
-import java.io.File
+import com.sshtools.common.publickey.SshPrivateKeyFileFactory
+import com.sshtools.common.publickey.SshPublicKeyFileFactory
+import java.nio.charset.StandardCharsets
 
 
 class SshtoolsSkmKeyPairGen:SkmKeyPairGenerator {
@@ -18,20 +18,22 @@ class SshtoolsSkmKeyPairGen:SkmKeyPairGenerator {
     }
 
     override fun generateKeyPair(passphrase: String, algorithm: String, keyLen: Int, comment: String):SkmKeyPair {
-        val privateKeyFile: File = FsUtils.createTempKeyFile("privKey")
-        val publicKeyFile: File = FsUtils.createTempKeyFile("pubKey")
+//        val privateKeyFile: File = FsUtils.createTempKeyFile("privKey")
+//        val publicKeyFile: File = FsUtils.createTempKeyFile("pubKey")
 
         val keyType = getKeyTypeByAlgorithm(algorithm)
 
         val pair = SshKeyPairGenerator.generateKeyPair(keyType, keyLen)
-        SshKeyUtils.createPublicKeyFile(pair.publicKey, comment, publicKeyFile)
-        SshKeyUtils.createPrivateKeyFile(pair, passphrase, privateKeyFile)
+//        SshKeyUtils.createPublicKeyFile(pair.publicKey, comment, publicKeyFile)
+//        SshKeyUtils.createPrivateKeyFile(pair, passphrase, privateKeyFile)
+        val publicKeyFile = SshPublicKeyFileFactory.create(pair.publicKey, comment, SshPublicKeyFileFactory.OPENSSH_FORMAT)
+        val privateKeyFile = SshPrivateKeyFileFactory.create(pair, passphrase, SshPrivateKeyFileFactory.OPENSSH_FORMAT)
 
-        val privateKey = privateKeyFile.readText()
-        val publicKey = publicKeyFile.readText()
+        val publicKey = String(publicKeyFile.formattedKey, StandardCharsets.UTF_8)
+        val privateKey = String(privateKeyFile.formattedKey, StandardCharsets.UTF_8)
 
-        privateKeyFile.delete()
-        publicKeyFile.delete()
+//        privateKeyFile.delete()
+//        publicKeyFile.delete()
 
         return SkmKeyPair(
             privateKey = privateKey,

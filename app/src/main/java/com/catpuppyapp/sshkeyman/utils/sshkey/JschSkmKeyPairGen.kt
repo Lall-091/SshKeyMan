@@ -5,6 +5,9 @@ import java.io.ByteArrayOutputStream
 
 
 class JschSkmKeyPairGen:SkmKeyPairGenerator {
+    // if generate rsa-4096 key, may need enlarge once, for other types, should enough
+    private val byteBufferSize=2048
+
     private fun getKeyTypeByAlgorithm(algorithm:String):Int {
         return when (algorithm) {
             SkmKeyPairGenerator.ED25529 -> com.jcraft.jsch.KeyPair.ED25519
@@ -19,8 +22,8 @@ class JschSkmKeyPairGen:SkmKeyPairGenerator {
         val jsch = JSch()
         val keyType = getKeyTypeByAlgorithm(algorithm)
         val keyPair: com.jcraft.jsch.KeyPair = com.jcraft.jsch.KeyPair.genKeyPair(jsch, keyType, keyLen)
-        val privateKeyOutStream = ByteArrayOutputStream()
-        val publicKeyOutStream = ByteArrayOutputStream()
+        val privateKeyOutStream = ByteArrayOutputStream(byteBufferSize)
+        val publicKeyOutStream = ByteArrayOutputStream(byteBufferSize)
 
         try {
             if(passphrase.isNotEmpty()) {
