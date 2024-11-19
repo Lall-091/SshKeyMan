@@ -53,5 +53,7 @@
     <string name="name">Name</string>
     <string name="success">Success</string>
     <string name="algo">Algo</string>
+    <string name="delete">Delete</string>
+    <string name="will_delete_itemname">will delete \'%1$s\'</string>
 
 </resources>

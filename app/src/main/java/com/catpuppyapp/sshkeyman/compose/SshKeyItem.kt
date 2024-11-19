@@ -6,6 +6,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -32,13 +35,16 @@ import com.catpuppyapp.sshkeyman.style.MyStyleKt
 import com.catpuppyapp.sshkeyman.theme.Theme
 import com.catpuppyapp.sshkeyman.utils.AppModel
 import com.catpuppyapp.sshkeyman.utils.Msg
+import com.catpuppyapp.sshkeyman.utils.MyLog
 import com.catpuppyapp.sshkeyman.utils.UIHelper
+import com.catpuppyapp.sshkeyman.utils.changeStateTriggerRefreshPage
 import com.catpuppyapp.sshkeyman.utils.copyAndShowCopied
 import com.catpuppyapp.sshkeyman.utils.doJobThenOffLoading
 import com.catpuppyapp.sshkeyman.utils.getFormatTimeFromSec
 import com.catpuppyapp.sshkeyman.utils.state.CustomStateSaveable
 import kotlinx.coroutines.delay
 
+private val TAG = "SshKeyItem"
 
 @Composable
 fun SshKeyItem(
@@ -48,6 +54,7 @@ fun SshKeyItem(
     curItemDto: SshKeyEntity,
     curItemDtoIdx:Int,
     requireBlinkIdx:MutableIntState,
+    needRefresh:MutableState<String>
 ) {
     val navController = AppModel.singleInstanceHolder.navController
     val haptic = AppModel.singleInstanceHolder.haptic
@@ -75,6 +82,34 @@ fun SshKeyItem(
             showViewDialog.value=false
             clipboardManager.setText(AnnotatedString(viewDialogText.value))
             Msg.requireShow(activityContext.getString(R.string.copied))
+        }
+    }
+
+    val showDelDialog = rememberSaveable { mutableStateOf(false) }
+    if(showDelDialog.value) {
+        ConfirmDialog2(
+            title = stringResource(R.string.delete),
+            requireShowTextCompose = true,
+            textCompose = {
+                Column {
+                    Text(stringResource(R.string.will_delete_itemname, curItemDto.name))
+                }
+            },
+            okTextColor = MyStyleKt.TextColor.danger(),
+            onCancel = {showDelDialog.value =false}
+        ) {
+            showDelDialog.value =false
+            doJobThenOffLoading {
+                try {
+                    AppModel.singleInstanceHolder.dbContainer.sshKeyRepository.delete(curItemDto)
+
+                    Msg.requireShow(activityContext.getString(R.string.success))
+                    changeStateTriggerRefreshPage(needRefresh)
+                }catch (e:Exception) {
+                    Msg.requireShowLongDuration(e.localizedMessage ?:"unknown err")
+                    MyLog.e(TAG, "delete ssh key '${curItemDto.name}' err: ${e.stackTraceToString()}")
+                }
+            }
         }
     }
 
@@ -138,7 +173,8 @@ fun SshKeyItem(
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Row(modifier = Modifier.fillMaxWidth(.6F)) {
                     Text(
@@ -155,6 +191,15 @@ fun SshKeyItem(
                         overflow = TextOverflow.Ellipsis,
                     )
 
+                }
+
+                LongPressAbleIconBtn(
+                    tooltipText = stringResource(R.string.delete),
+                    icon = Icons.Filled.Delete,
+                    iconContentDesc = stringResource(id = R.string.delete),
+                    iconModifier = Modifier.size(20.dp)
+                ) {
+                    showDelDialog.value = true
                 }
 
             }

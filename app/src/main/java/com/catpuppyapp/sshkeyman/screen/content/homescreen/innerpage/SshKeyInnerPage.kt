@@ -315,7 +315,7 @@ fun SshKeyInnerPage(
                 element,
                 idx,
                 requireBlinkIdx = requireBlinkIdx,
-
+                needRefreshPage
             )
 
         }
