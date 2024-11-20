@@ -26,7 +26,7 @@ import java.time.format.DateTimeFormatter
 import java.util.UUID
 import kotlin.io.path.exists
 
-private val TAG = "Utils"
+private const val TAG = "Utils"
 
 
 fun showToast(context: Context, text:String, duration:Int=Toast.LENGTH_SHORT) {
@@ -151,7 +151,7 @@ fun getFormatTimeFromSec(sec:Long, formatter:DateTimeFormatter = Cons.defaultDat
         return formatter.format(timeFromSec)
 
     }catch (e:Exception) {
-        MyLog.e(TAG, "format date failed: ${e.stackTraceToString()}")
+        MyLog.e(TAG, "#getFormatTimeFromSec: format datetime failed: ${e.stackTraceToString()}")
         return ""
     }
 }
