@@ -61,7 +61,7 @@ data class OpenSource(
 )
 
 private val openSourceList= listOf<OpenSource>(
-    OpenSource(projectName = "Jsch", projectLink = "https://github.com/mwiede/jsch", licenseLink = "https://github.com/mwiede/jsch/blob/master/LICENSE.txt"),
+//    OpenSource(projectName = "Jsch", projectLink = "https://github.com/mwiede/jsch", licenseLink = "https://github.com/mwiede/jsch/blob/master/LICENSE.txt"),
     OpenSource(projectName = "Sshtools", projectLink = "https://github.com/sshtools/maverick-synergy", licenseLink = "https://github.com/sshtools/maverick-synergy/blob/master/LICENSE"),
     OpenSource(projectName = "Bouncy Castle", projectLink = "https://github.com/bcgit/bc-java", licenseLink = "https://github.com/bcgit/bc-java/blob/main/LICENSE.md"),
 )
