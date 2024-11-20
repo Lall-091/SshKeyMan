@@ -326,6 +326,7 @@ fun SshKeyInnerPage(
                         || it.algo.lowercase().contains(k)
                         || it.note.lowercase().contains(k)
                         || it.id.lowercase().contains(k)
+                        || it.getCreateTimeCached().lowercase().contains(k)
             }
 
             filterList.value.clear()

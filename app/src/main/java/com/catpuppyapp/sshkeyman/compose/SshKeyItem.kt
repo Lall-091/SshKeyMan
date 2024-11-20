@@ -40,7 +40,6 @@ import com.catpuppyapp.sshkeyman.utils.UIHelper
 import com.catpuppyapp.sshkeyman.utils.changeStateTriggerRefreshPage
 import com.catpuppyapp.sshkeyman.utils.copyAndShowCopied
 import com.catpuppyapp.sshkeyman.utils.doJobThenOffLoading
-import com.catpuppyapp.sshkeyman.utils.getFormatTimeFromSec
 import com.catpuppyapp.sshkeyman.utils.state.CustomStateSaveable
 import kotlinx.coroutines.delay
 
@@ -319,7 +318,7 @@ fun SshKeyItem(
                 ) {
                     Text(text = stringResource(R.string.create) + ":")
                     Text(
-                        text = getFormatTimeFromSec(curItemDto.baseFields.baseUpdateTime),
+                        text = curItemDto.getCreateTimeCached(),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         fontWeight = FontWeight.Light,

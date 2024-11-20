@@ -2,8 +2,10 @@ package com.catpuppyapp.sshkeyman.data.entity
 
 import androidx.room.Embedded
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.catpuppyapp.sshkeyman.data.entity.common.BaseFields
+import com.catpuppyapp.sshkeyman.utils.getFormatTimeFromSec
 import com.catpuppyapp.sshkeyman.utils.getShortUUID
 
 @Entity(tableName = "sshkey")
@@ -41,5 +43,16 @@ data class SshKeyEntity(
     var baseFields: BaseFields=BaseFields(),
 
 ) {
+
+    @Ignore
+    var cachedCreateTime:String? = null
+
+    fun getCreateTimeCached(): String {
+        if(cachedCreateTime==null) {
+            cachedCreateTime = getFormatTimeFromSec(baseFields.baseCreateTime)
+        }
+
+        return cachedCreateTime ?: ""
+    }
 
 }
