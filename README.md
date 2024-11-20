@@ -2,7 +2,7 @@
 Generate/Manage your ssh keys on Android devices
 
 feature:
-generate ed25519/ecdsap256/rsa ssh keys
+generate ed25519/ecdsa(p256)/rsa(2048, 4096) ssh keys
 
 ## Author
 SshKeyMan made by Bandeapart1964 of catpuppyapp

@@ -10,8 +10,8 @@ package com.catpuppyapp.sshkeyman.utils.sshkey
 //
 //    private fun getKeyTypeByAlgorithm(algorithm:String):Int {
 //        return when (algorithm) {
-//            SkmKeyPairGenerator.ED25529 -> com.jcraft.jsch.KeyPair.ED25519
-//            SkmKeyPairGenerator.ECDSAP256 -> com.jcraft.jsch.KeyPair.ECDSA
+//            SkmKeyPairGenerator.ED25519 -> com.jcraft.jsch.KeyPair.ED25519
+//            SkmKeyPairGenerator.ECDSA_P256 -> com.jcraft.jsch.KeyPair.ECDSA
 //            SkmKeyPairGenerator.RSA2048 -> com.jcraft.jsch.KeyPair.RSA
 //            SkmKeyPairGenerator.RSA4096 -> com.jcraft.jsch.KeyPair.RSA
 //            else -> throw IllegalArgumentException("doesn't support algorithm: $algorithm")

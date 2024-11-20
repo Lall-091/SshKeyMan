@@ -83,7 +83,7 @@ class AppModel {
 //            Security.removeProvider(BouncyCastleProvider.PROVIDER_NAME)
 //            Security.addProvider(BouncyCastleProvider())
 
-//            val sshKeyEntity = SshKeyUtil.createSshKeyEntity("test ed255", SshKeyUtil.ED25529, "test", "test")
+//            val sshKeyEntity = SshKeyUtil.createSshKeyEntity("test ed255", SshKeyUtil.ED25519, "test", "test")
 //            println(sshKeyEntity)
             //test end
 

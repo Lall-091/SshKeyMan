@@ -2,7 +2,7 @@
 
 
 特性:
-生成 ed25519/ecdsap256/rsa ssh密钥
+生成 ed25519/ecdsa(p256)/rsa ssh密钥
 
 
 https://github.com/catpuppyapp/PuppySshKeyMan

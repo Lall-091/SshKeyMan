@@ -9,12 +9,12 @@ interface SkmKeyPairGenerator {
 
 //    val bouncyCastleProviderStr="BC"
 
-        val ED25529 = "Ed25519"  // recommend，但太麻烦，算了，不支持了
-        val ECDSAP256 = "ECDSA(P256)"
-        val RSA2048 = "RSA(2048)"
-        val RSA4096 = "RSA(4096)"
+        const val ED25519 = "Ed25519"  // recommend，但太麻烦，算了，不支持了
+        const val ECDSA_P256 = "ECDSA(P256)"
+        const val RSA2048 = "RSA(2048)"
+        const val RSA4096 = "RSA(4096)"
 
-        val algoList = listOf(ED25529, ECDSAP256, RSA2048, RSA4096)
+        val algoList = listOf(ED25519, ECDSA_P256, RSA2048, RSA4096)
 
     }
 

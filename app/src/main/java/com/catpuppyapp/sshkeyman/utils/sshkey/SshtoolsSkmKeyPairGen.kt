@@ -8,8 +8,8 @@ import com.sshtools.common.publickey.SshPublicKeyFileFactory
 class SshtoolsSkmKeyPairGen:SkmKeyPairGenerator {
     private fun getKeyTypeByAlgorithm(algorithm:String):String {
         return when (algorithm) {
-            SkmKeyPairGenerator.ED25529 -> SshKeyPairGenerator.ED25519
-            SkmKeyPairGenerator.ECDSAP256 -> SshKeyPairGenerator.ECDSA
+            SkmKeyPairGenerator.ED25519 -> SshKeyPairGenerator.ED25519
+            SkmKeyPairGenerator.ECDSA_P256 -> SshKeyPairGenerator.ECDSA
             SkmKeyPairGenerator.RSA2048 -> SshKeyPairGenerator.SSH2_RSA
             SkmKeyPairGenerator.RSA4096 -> SshKeyPairGenerator.SSH2_RSA
             else -> throw IllegalArgumentException("doesn't support algorithm: $algorithm")
