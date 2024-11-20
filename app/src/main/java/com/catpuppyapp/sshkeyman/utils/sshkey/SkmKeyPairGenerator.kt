@@ -1,8 +1,11 @@
 package com.catpuppyapp.sshkeyman.utils.sshkey
 
+import java.nio.charset.Charset
+
 interface SkmKeyPairGenerator {
     companion object {
-        val defaultCharset = "UTF-8"
+        const val defaultCharset = "UTF-8"
+        val defaultCharsetObj = Charset.forName(defaultCharset)  // this instance can shareable in multi threads
 
 //    val bouncyCastleProviderStr="BC"
 
@@ -16,8 +19,11 @@ interface SkmKeyPairGenerator {
     }
 
     /**
-     * the comment usually is email
-     * for ed25519 the keyLen is nonsense, always 256
+     * @param passphrase if null or empty, should no encrypt, else will encrypt the private key
+     * @param algorithm one of the `SkmKeyPairGenerator.algoList`
+     * @param keyLen for ed25519 the keyLen is nonsense, always 256
+     * @param comment the comment usually is email
+     *
      */
     fun generateKeyPair(passphrase: String, algorithm:String, keyLen:Int, comment:String) :SkmKeyPair
 }
