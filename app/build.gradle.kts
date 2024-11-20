@@ -76,10 +76,10 @@ android {
 
     buildTypes {
         release {
-//            isMinifyEnabled = !project.hasProperty("disableMinify")
-//            isShrinkResources = !project.hasProperty("disableShrinkRes")
-            isMinifyEnabled = false
-            isShrinkResources = false
+            isMinifyEnabled = !project.hasProperty("disableMinify")
+            isShrinkResources = !project.hasProperty("disableShrinkRes")
+//            isMinifyEnabled = false
+//            isShrinkResources = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -122,13 +122,15 @@ android {
 }
 
 dependencies {
-// https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk18on
+    // Bouncy Castle for ed25519
     implementation("org.bouncycastle:bcprov-jdk18on:1.79")
     implementation("org.bouncycastle:bcpkix-jdk18on:1.79")
-    implementation("com.github.mwiede:jsch:0.2.21")
-// https://mvnrepository.com/artifact/com.sshtools/maverick-bc
+
+    // jsch
+//    implementation("com.github.mwiede:jsch:0.2.21")
+
+    // sshtools
     implementation("com.sshtools:maverick-bc:3.1.2")
-// https://mvnrepository.com/artifact/com.sshtools/maverick-synergy-client
     implementation("com.sshtools:maverick-synergy-client:3.1.2")
 
 
@@ -142,7 +144,7 @@ dependencies {
 //    // implementation("androidx.ads:ads-identifier:1.0.0-alpha05")
 
 
-    implementation("androidx.documentfile:documentfile:1.0.1")
+//    implementation("androidx.documentfile:documentfile:1.0.1")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.6")
     //implementation("androidx.appcompat:appcompat-resources:1.6.1")
     //    val work_version = "2.9.0"
@@ -174,7 +176,7 @@ dependencies {
 //    implementation("io.coil-kt:coil:2.6.0")
 //    implementation("io.coil-kt:coil-compose:2.6.0")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+//    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 // https://mvnrepository.com/artifact/org.eclipse.jgit/org.eclipse.jgit
 //    implementation("org.eclipse.jgit:org.eclipse.jgit:v6.6.1.202309021850-r")
 // https://mvnrepository.com/artifact/org.eclipse.jgit/org.eclipse.jgit.pgm

@@ -7,7 +7,6 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.hapticfeedback.HapticFeedback
@@ -19,7 +18,6 @@ import com.catpuppyapp.sshkeyman.BuildConfig
 import com.catpuppyapp.sshkeyman.constants.Cons
 import com.catpuppyapp.sshkeyman.data.AppContainer
 import com.catpuppyapp.sshkeyman.data.AppDataContainer
-import kotlinx.coroutines.CoroutineScope
 import java.io.File
 
 private val TAG ="AppModel"
@@ -66,7 +64,7 @@ class AppModel {
             appModel.externalFilesDir = externalFilesDir
             appModel.externalCacheDir = externalCacheDir
             appModel.tempKeysDir = createDirIfNonexists(externalCacheDir, Cons.TempKeysDirName)
-            appModel.innerDataDir = innerDataDir
+//            appModel.innerDataDir = innerDataDir
 
             // clear keys cache every time launch
             try {
@@ -187,7 +185,7 @@ class AppModel {
         fun init_3(appModel: AppModel = singleInstanceHolder){
 
             appModel.navController = rememberNavController()
-            appModel.coroutineScope = rememberCoroutineScope()
+//            appModel.coroutineScope = rememberCoroutineScope()
 
 //            TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())  //上推隐藏，下拉出现，TopAppBarState 可放到外部以保存状态，如果需要的话
             //TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())  //常驻TopBar，固定显示，不会隐藏
@@ -266,11 +264,11 @@ class AppModel {
 
     lateinit var dbContainer: AppContainer
 
-    @Deprecated("用 `LocalHapticFeedback.current` 替代")
-    lateinit var haptic:HapticFeedback
+//    @Deprecated("用 `LocalHapticFeedback.current` 替代")
+    lateinit var haptic: HapticFeedback
 
-    @Deprecated("用 `rememberCoroutineScope()` 替代，remember的貌似会随页面创建，随页面释放")
-    lateinit var coroutineScope:CoroutineScope  //这个scope是全局的，生命周期几乎等于app的生命周期(？有待验证，不过因为是在根Compose创建的所以多半差不多是这样)，如果要执行和当前compose生命周期一致的任务，应该用 rememberCoroutineScope() 在对应compose重新获取一个scope
+//    @Deprecated("用 `rememberCoroutineScope()` 替代，remember的貌似会随页面创建，随页面释放")
+//    lateinit var coroutineScope:CoroutineScope  //这个scope是全局的，生命周期几乎等于app的生命周期(？有待验证，不过因为是在根Compose创建的所以多半差不多是这样)，如果要执行和当前compose生命周期一致的任务，应该用 rememberCoroutineScope() 在对应compose重新获取一个scope
 
     lateinit var navController:NavHostController
 
@@ -284,7 +282,7 @@ class AppModel {
     lateinit var tempKeysDir: File
 
     // app 的内部目录， /data/data/app包名 或者 /data/user/0/app包名，这俩目录好像其中一个是另一个的符号链接
-    lateinit var innerDataDir: File
+//    lateinit var innerDataDir: File
 
     //内部StorageDir存储目录，所有类型为“内部”的StorageDir都存储在这个路径下，默认在用户空间 Android/data/xxxxxx包名/files/StorageDirs 路径。里面默认有之前的 allRepoParentDir 和 LogData 目录，且这两个目录不能删除
     //废弃，直接存到 Android/包名/files目录即， 不必再新建一层目录，存files没什么缺点，而且还能兼容旧版，何乐而不为？

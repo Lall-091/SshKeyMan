@@ -1,10 +1,8 @@
 package com.catpuppyapp.sshkeyman.utils
 
-import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
 import androidx.core.content.FileProvider
-import androidx.documentfile.provider.DocumentFile
 import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
@@ -44,29 +42,29 @@ object FsUtils {
 
         return uri
     }
-
-
-    fun recursiveExportFiles_Saf(contentResolver: ContentResolver, exportDir: DocumentFile, files: List<File>) {
-        for(f in files) {
-            if(f.isDirectory) {
-                val subDir = exportDir.createDirectory(f.name)?:continue
-                val subDirFiles = f.listFiles()?:continue
-                recursiveExportFiles_Saf(contentResolver, subDir, subDirFiles.toList())
-            }else {
-                val targetFile = exportDir.createFile("*/*", f.name)?:continue
-//                if(srcFile.exists()) {  //无需判断文件名是否已经存在，DocumentFile创建文件时会自动重命名
 //
+//
+//    fun recursiveExportFiles_Saf(contentResolver: ContentResolver, exportDir: DocumentFile, files: List<File>) {
+//        for(f in files) {
+//            if(f.isDirectory) {
+//                val subDir = exportDir.createDirectory(f.name)?:continue
+//                val subDirFiles = f.listFiles()?:continue
+//                recursiveExportFiles_Saf(contentResolver, subDir, subDirFiles.toList())
+//            }else {
+//                val targetFile = exportDir.createFile("*/*", f.name)?:continue
+////                if(srcFile.exists()) {  //无需判断文件名是否已经存在，DocumentFile创建文件时会自动重命名
+////
+////                }
+//                val output = contentResolver.openOutputStream(targetFile.uri)?:continue
+//                f.inputStream().use { ins->
+//                    output.use { outs ->
+//                        ins.copyTo(outs)
+//                    }
 //                }
-                val output = contentResolver.openOutputStream(targetFile.uri)?:continue
-                f.inputStream().use { ins->
-                    output.use { outs ->
-                        ins.copyTo(outs)
-                    }
-                }
-            }
-        }
-
-    }
+//            }
+//        }
+//
+//    }
 
 
     fun createTempFile(prefix:String, suffix:String=".tmp", baseDirPath:String =AppModel.singleInstanceHolder.getOrCreateExternalCacheDir().canonicalPath):File{

@@ -7,7 +7,7 @@ import java.security.Security
 
 
 object SkmSshKeyUtil {
-    val jschKeyGen = JschSkmKeyPairGen()
+//    val jschKeyGen = JschSkmKeyPairGen()
     val sshtoolKeyGen = SshtoolsSkmKeyPairGen()
 
     fun createSshKeyEntity(name:String, algorithm: String, passphrase: String, email: String): SshKeyEntity {
