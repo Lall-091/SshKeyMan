@@ -30,7 +30,8 @@ fun AppScreenNavigator() {
 //    val homeTopBarScrollBehavior = AppModel.singleInstanceHolder.homeTopBarScrollBehavior
     val editorPageLastFilePath = rememberSaveable { mutableStateOf("")}
 
-    val repoPageListState = rememberLazyListState()
+    val sshkeyPageListState = rememberLazyListState()
+    val sshkeyPageFilterListState = rememberLazyListState()
 //    val filePageListState = StateUtil.getRememberLazyListState()
     //网上拷贝的声称能记住滚动状态的lazyColumn listState，实际上，没有用，我记得默认的listState是能记住的，现在不能记住，可能是bug
 //    val repoPageListState = rememberForeverLazyListState("repo")
@@ -53,7 +54,12 @@ fun AppScreenNavigator() {
 
     NavHost(navController = navController, startDestination = navStartScreen) {
         composable(Cons.nav_HomeScreen) {
-            HomeScreen(drawerState, currentHomeScreen, repoPageListState, editorPageLastFilePath)
+            HomeScreen(
+                drawerState = drawerState,
+                currentHomeScreen = currentHomeScreen,
+                sshkeyPageListState = sshkeyPageListState,
+                sshkeyPageFilterListState = sshkeyPageFilterListState
+            )
         }
         //注意：带返回箭头的二级菜单用 navController.navigateUp() api返回，这个和navipopup有点不同，如果在自己app里导航，两者一致，如果从外部app导航进本app，例如从其他app通过deeplink跳转到了本app，那么navigateUp会返回其他app，而popup则会尝试返回到操作系统为本app构建的虚拟栈中，按照这个理解，navigateUp期望返回进入本app的应用，而popup则期望返回本app内当前页面的上一页面（如果有的话）
         //如果不是通过外部app跳转进本程序，navigateUp不会退出本app，但popup会。

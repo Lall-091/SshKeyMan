@@ -179,7 +179,8 @@ fun SshKeyItem(
                 Row(modifier = Modifier.fillMaxWidth(.6F)) {
                     Text(
                         text = curItemDto.name,
-                        fontSize = 15.sp,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(
                             start = 10.dp,
                             top = 5.dp,

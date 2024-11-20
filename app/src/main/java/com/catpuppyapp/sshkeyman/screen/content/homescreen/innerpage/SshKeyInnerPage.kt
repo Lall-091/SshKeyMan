@@ -48,6 +48,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.catpuppyapp.sshkeyman.R
@@ -70,9 +71,10 @@ import com.catpuppyapp.sshkeyman.utils.doJobThenOffLoading
 import com.catpuppyapp.sshkeyman.utils.sshkey.SkmKeyPairGenerator
 import com.catpuppyapp.sshkeyman.utils.state.CustomStateListSaveable
 import com.catpuppyapp.sshkeyman.utils.state.CustomStateSaveable
+import com.catpuppyapp.sshkeyman.utils.state.mutableCustomStateListOf
 
-private val TAG = "SshKeyInnerPage"
-private val stateKeyTag = "SshKeyInnerPage"
+private const val TAG = "SshKeyInnerPage"
+private const val stateKeyTag = "SshKeyInnerPage"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -83,10 +85,14 @@ fun SshKeyInnerPage(
     curRepoIndex: MutableIntState,
     contentPadding: PaddingValues,
     listState: LazyListState,
-    openDrawer:() -> Unit,
-    repoList:CustomStateListSaveable<SshKeyEntity>,
-    needRefreshPage:MutableState<String>,
-    showCreateDialog:MutableState<Boolean>
+    filterListState: LazyListState,
+    openDrawer: () -> Unit,
+    itemList: CustomStateListSaveable<SshKeyEntity>,
+    needRefreshPage: MutableState<String>,
+    showCreateDialog: MutableState<Boolean>,
+    filterModeOnFlag: MutableState<Boolean>,
+    filterKeyword: CustomStateSaveable<TextFieldValue>,
+    closeFilter:()->Unit
 ) {
     val activityContext = AppModel.singleInstanceHolder.activityContext;
     val exitApp = AppModel.singleInstanceHolder.exitApp;
@@ -107,7 +113,11 @@ fun SshKeyInnerPage(
     val backHandlerOnBack = ComposeHelper.getDoubleClickBackHandler(context = activityContext, openDrawer = openDrawer, exitApp = exitApp)
     //注册BackHandler，拦截返回键，实现双击返回和返回上级目录
     BackHandler(enabled = isBackHandlerEnable.value, onBack = {
-        backHandlerOnBack()
+        if(filterModeOnFlag.value) {
+            closeFilter()
+        }else {
+            backHandlerOnBack()
+        }
     })
     //back handler block end
 
@@ -135,6 +145,9 @@ fun SshKeyInnerPage(
 
     val algoList = SkmKeyPairGenerator.algoList
     val selectedAlgo = rememberSaveable { mutableIntStateOf(0) }
+
+    val filterList = mutableCustomStateListOf( stateKeyTag, "filterList", listOf<SshKeyEntity>() )
+    val enableFilterState = rememberSaveable { mutableStateOf(false)}
 
     val spacerHeight = remember {15.dp}
     if(showCreateDialog.value) {
@@ -259,7 +272,10 @@ fun SshKeyInnerPage(
     }
 
 
-    if (!isLoading.value && repoList.value.isEmpty()) {  //无仓库，显示添加按钮
+
+
+
+    if (!isLoading.value && itemList.value.isEmpty()) {  //无仓库，显示添加按钮
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -299,10 +315,35 @@ fun SshKeyInnerPage(
 
 
 
-    if(!isLoading.value && repoList.value.isNotEmpty()) {  //有仓库
+    if(!isLoading.value && itemList.value.isNotEmpty()) {  //有条目
+        //根据关键字过滤条目
+        val k = filterKeyword.value.text.lowercase()  //关键字
+        val enableFilter = filterModeOnFlag.value && k.isNotEmpty()
+        val filteredList = if(enableFilter){
+            val tmpList = itemList.value.filter {
+                it.name.lowercase().contains(k)
+                        || it.email.lowercase().contains(k)
+                        || it.algo.lowercase().contains(k)
+                        || it.note.lowercase().contains(k)
+                        || it.id.lowercase().contains(k)
+            }
+
+            filterList.value.clear()
+            filterList.value.addAll(tmpList)
+            tmpList
+        }else {
+            itemList.value
+        }
+
+        val listState = if(enableFilter) filterListState else listState
+
+        //更新是否启用filter
+        enableFilterState.value = enableFilter
+
+
         MyLazyColumn(
             contentPadding = contentPadding,
-            list = repoList.value,
+            list = filteredList,
             listState = listState,
             requireForEachWithIndex = true,
             requirePaddingAtBottom = true
@@ -335,7 +376,7 @@ fun SshKeyInnerPage(
             // 仓库页面检查仓库状态，对所有状态为notReadyNeedClone的仓库执行clone，卡片把所有状态为notReadyNeedClone的仓库都设置成不可操作，显示正在克隆loading信息
             doInit(
                 dbContainer = dbContainer,
-                repoDtoList = repoList,
+                repoDtoList = itemList,
                 loadingOn = loadingOn,
                 loadingOff = loadingOff,
                 activityContext = activityContext,

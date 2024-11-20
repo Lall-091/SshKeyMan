@@ -71,8 +71,8 @@ fun HomeScreen(
 //    scope: CoroutineScope,
 //    scrollBehavior: TopAppBarScrollBehavior,
     currentHomeScreen: MutableIntState,
-    repoPageListState: LazyListState,
-    editorPageLastFilePath: MutableState<String>,
+    sshkeyPageListState: LazyListState,
+    sshkeyPageFilterListState: LazyListState,
 
 //    filePageListState: LazyListState,
 //    haptic: HapticFeedback,
@@ -90,18 +90,18 @@ fun HomeScreen(
     val showBottomSheet = rememberSaveable { mutableStateOf(false)}
     val showCreateSshKeyDialog = rememberSaveable { mutableStateOf(false)}
 
-    val sshKeyPageFilterModeOn = rememberSaveable { mutableStateOf(false)}
+    val sshKeyPageFilterModeOnFlag = rememberSaveable { mutableStateOf(false)}
     val sshKeyPageFilterKeyword =mutableCustomStateOf(keyTag = stateKeyTag, keyName = "sshKeyPageFilterKeyword"){
         TextFieldValue("")
     }
     val filterModeOff = {
-        sshKeyPageFilterModeOn.value = false
+        sshKeyPageFilterModeOnFlag.value = false
         sshKeyPageFilterKeyword.value = TextFieldValue("")
     }
 
     val filterModeOn = {
         sshKeyPageFilterKeyword.value = TextFieldValue("")
-        sshKeyPageFilterModeOn.value = true
+        sshKeyPageFilterModeOnFlag.value = true
     }
     //替换成我的cusntomstateSaver，然后把所有实现parcellzier的类都取消实现parcellzier，改成用我的saver
     val sshKeyPageCurItem = mutableCustomStateOf(keyTag = stateKeyTag, keyName = "sshKeyPageCurItem", initValue = SshKeyEntity(id=""))  //id=空，表示无效仓库
@@ -180,12 +180,12 @@ fun HomeScreen(
                     ),
                     title = {
                         if(currentHomeScreen.intValue == Cons.selectedItem_SshKeys){
-                            if(sshKeyPageFilterModeOn.value) {
+                            if(sshKeyPageFilterModeOnFlag.value) {
                                 FilterTextField(
                                     sshKeyPageFilterKeyword,
                                 )
                             }else {
-                                SshKeyTitle(repoPageListState, scope)
+                                SshKeyTitle(sshkeyPageListState, scope)
                             }
                         }else if (currentHomeScreen.intValue == Cons.selectedItem_About) {
                             AboutTitle()
@@ -194,7 +194,7 @@ fun HomeScreen(
                         }
                     },
                     navigationIcon = {
-                        if(sshKeyPageFilterModeOn.value) {
+                        if(sshKeyPageFilterModeOnFlag.value) {
                             LongPressAbleIconBtn(
                                 tooltipText = stringResource(R.string.close),
                                 icon = Icons.Filled.Close,
@@ -219,7 +219,7 @@ fun HomeScreen(
                     },
                     actions = {
                         if(currentHomeScreen.intValue == Cons.selectedItem_SshKeys) {
-                            if(sshKeyPageFilterModeOn.value.not()) {
+                            if(sshKeyPageFilterModeOnFlag.value.not()) {
                                 SshKeyPageActions(navController, sshKeyPageCurItem, needRefreshSshKeyPage,
                                     showCreateSshKeyDialog, filterModeOn
                                 )
@@ -238,11 +238,15 @@ fun HomeScreen(
                     curRepo = sshKeyPageCurItem,
                     curRepoIndex = sshKeyPageCurItemIndex,
                     contentPadding = contentPadding,
-                    listState = repoPageListState,
+                    listState = sshkeyPageListState,
+                    filterListState = sshkeyPageFilterListState,
                     openDrawer = openDrawer,
-                    repoList = sshKeyList,
+                    itemList = sshKeyList,
                     needRefreshPage = needRefreshSshKeyPage,
-                    showCreateSshKeyDialog
+                    showCreateDialog = showCreateSshKeyDialog,
+                    filterModeOnFlag = sshKeyPageFilterModeOnFlag,
+                    filterKeyword = sshKeyPageFilterKeyword,
+                    closeFilter = filterModeOff
                 )
 
             }else if(currentHomeScreen.intValue == Cons.selectedItem_About) {

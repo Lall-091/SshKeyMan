@@ -19,6 +19,11 @@ data class SshKeyEntity(
      *  a RepoEntity with blank name
      */
     var name: String = "",  //字段需唯一
+    /**
+     * actually this is `comment` for public key, not real make sense
+     * but when create a ssh key, usually input a email address as comment,
+     * so ,named it to `email`, for people , more familiar
+     */
     var email:String ="",
     var publicKey:String="",
     var privateKey:String="",
@@ -27,6 +32,9 @@ data class SshKeyEntity(
      * one of SshKeyUtil.algoList item
      */
     var algo:String="",
+    /**
+     * this is not in the sshkey pair, just save to db for let users write some note
+     */
     var note:String="",  //备注
 
     @Embedded
