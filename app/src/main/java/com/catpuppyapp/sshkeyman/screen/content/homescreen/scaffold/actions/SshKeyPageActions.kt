@@ -2,6 +2,7 @@ package com.catpuppyapp.sshkeyman.screen.content.homescreen.scaffold.actions
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -21,7 +22,8 @@ fun SshKeyPageActions(
     navController: NavHostController,
     curItem: CustomStateSaveable<SshKeyEntity>,
     needRefresh: MutableState<String>,
-    showCreateSshKeyDialog:MutableState<Boolean>
+    showCreateSshKeyDialog:MutableState<Boolean>,
+    filterModeOn:()->Unit,
 ) {
     /*  TODO 添加个设置按钮
      * 跳转到仓库全局设置页面，至少两个开关：
@@ -34,6 +36,15 @@ fun SshKeyPageActions(
 
     val closeMenu = {dropDownMenuExpendState.value = false}
 
+
+    LongPressAbleIconBtn(
+        tooltipText = stringResource(R.string.filter),
+        icon =  Icons.Filled.FilterAlt,
+        iconContentDesc = stringResource(id = R.string.filter),
+
+    ) {
+        filterModeOn()
+    }
 
     LongPressAbleIconBtn(
         tooltipText = stringResource(R.string.refresh),

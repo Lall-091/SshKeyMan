@@ -18,7 +18,7 @@ import kotlinx.coroutines.CoroutineScope
 fun SshKeyTitle(listState: LazyListState, scope:CoroutineScope) {
     Row (modifier = Modifier.combinedClickable(onDoubleClick = {
         UIHelper.scrollToItem(scope,listState,0)
-    }) {
+    }) {  // onclick
 
     }){
         Text(

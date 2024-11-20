@@ -273,7 +273,7 @@ fun AboutInnerPage(contentPadding: PaddingValues,
                 )
                 Spacer(Modifier.height(2.dp))
                 Text(
-                    text = "("+stringResource(R.string.license)+")",
+                    text = "("+stringResource(R.string.license_all_uppercase)+")",
                     fontSize = 12.sp,
                     style = MyStyleKt.ClickableText.style,
                     color = MyStyleKt.ClickableText.color,

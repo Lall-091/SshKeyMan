@@ -6,7 +6,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ExitToApp
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Menu
@@ -34,8 +34,10 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.catpuppyapp.sshkeyman.R
+import com.catpuppyapp.sshkeyman.compose.FilterTextField
 import com.catpuppyapp.sshkeyman.compose.LongPressAbleIconBtn
 import com.catpuppyapp.sshkeyman.constants.Cons
 import com.catpuppyapp.sshkeyman.data.entity.SshKeyEntity
@@ -56,6 +58,10 @@ import com.catpuppyapp.sshkeyman.utils.state.mutableCustomStateOf
 import kotlinx.coroutines.launch
 
 
+//for debug
+private const val TAG = "HomeScreen"
+private const val stateKeyTag = "HomeScreen"
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
@@ -71,9 +77,7 @@ fun HomeScreen(
 //    filePageListState: LazyListState,
 //    haptic: HapticFeedback,
 ) {
-    //for debug
-    val TAG = "HomeScreen"
-    val stateKeyTag = "HomeScreen"
+
 
 
     val navController = AppModel.singleInstanceHolder.navController
@@ -86,6 +90,19 @@ fun HomeScreen(
     val showBottomSheet = rememberSaveable { mutableStateOf(false)}
     val showCreateSshKeyDialog = rememberSaveable { mutableStateOf(false)}
 
+    val sshKeyPageFilterModeOn = rememberSaveable { mutableStateOf(false)}
+    val sshKeyPageFilterKeyword =mutableCustomStateOf(keyTag = stateKeyTag, keyName = "sshKeyPageFilterKeyword"){
+        TextFieldValue("")
+    }
+    val filterModeOff = {
+        sshKeyPageFilterModeOn.value = false
+        sshKeyPageFilterKeyword.value = TextFieldValue("")
+    }
+
+    val filterModeOn = {
+        sshKeyPageFilterKeyword.value = TextFieldValue("")
+        sshKeyPageFilterModeOn.value = true
+    }
     //替换成我的cusntomstateSaver，然后把所有实现parcellzier的类都取消实现parcellzier，改成用我的saver
     val sshKeyPageCurItem = mutableCustomStateOf(keyTag = stateKeyTag, keyName = "sshKeyPageCurItem", initValue = SshKeyEntity(id=""))  //id=空，表示无效仓库
     //使用前检查，大于等于0才是有效索引
@@ -163,7 +180,13 @@ fun HomeScreen(
                     ),
                     title = {
                         if(currentHomeScreen.intValue == Cons.selectedItem_SshKeys){
-                            SshKeyTitle(repoPageListState, scope)
+                            if(sshKeyPageFilterModeOn.value) {
+                                FilterTextField(
+                                    sshKeyPageFilterKeyword,
+                                )
+                            }else {
+                                SshKeyTitle(repoPageListState, scope)
+                            }
                         }else if (currentHomeScreen.intValue == Cons.selectedItem_About) {
                             AboutTitle()
                         } else {
@@ -171,26 +194,36 @@ fun HomeScreen(
                         }
                     },
                     navigationIcon = {
+                        if(sshKeyPageFilterModeOn.value) {
+                            LongPressAbleIconBtn(
+                                tooltipText = stringResource(R.string.close),
+                                icon = Icons.Filled.Close,
+                                iconContentDesc = stringResource(R.string.close),
 
-                        LongPressAbleIconBtn(
-                            tooltipText = stringResource(R.string.menu),
-                            icon = Icons.Filled.Menu,
-                            iconContentDesc = stringResource(R.string.menu),
-                        ) {
-                            scope.launch {
-                                drawerState.apply {
-                                    if (isClosed) open() else close()
+                                ) {
+                                filterModeOff()
+                            }
+                        }else {
+                            LongPressAbleIconBtn(
+                                tooltipText = stringResource(R.string.menu),
+                                icon = Icons.Filled.Menu,
+                                iconContentDesc = stringResource(R.string.menu),
+                            ) {
+                                scope.launch {
+                                    drawerState.apply {
+                                        if (isClosed) open() else close()
+                                    }
                                 }
                             }
                         }
-
-
                     },
                     actions = {
                         if(currentHomeScreen.intValue == Cons.selectedItem_SshKeys) {
-                            SshKeyPageActions(navController, sshKeyPageCurItem, needRefreshSshKeyPage,
-                                showCreateSshKeyDialog
-                            )
+                            if(sshKeyPageFilterModeOn.value.not()) {
+                                SshKeyPageActions(navController, sshKeyPageCurItem, needRefreshSshKeyPage,
+                                    showCreateSshKeyDialog, filterModeOn
+                                )
+                            }
                         }
                     },
                     scrollBehavior = homeTopBarScrollBehavior,

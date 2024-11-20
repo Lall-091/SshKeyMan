@@ -33,7 +33,7 @@
     <string name="donate">Donate</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="powered_by_open_source">Powered by Open Source</string>
-    <string name="license">License</string>
+    <string name="license_all_uppercase">LICENSE</string>
     <string name="exit">Exit</string>
     <string name="auto">Auto</string>
     <string name="light">Light</string>
@@ -55,5 +55,7 @@
     <string name="algo">Algo</string>
     <string name="delete">Delete</string>
     <string name="will_delete_itemname">will delete \'%1$s\'</string>
+    <string name="input_keyword">Input keyword</string>
+    <string name="filter">Filter</string>
 
 </resources>
