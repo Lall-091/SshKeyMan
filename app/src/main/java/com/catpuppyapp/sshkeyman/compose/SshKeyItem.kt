@@ -250,23 +250,25 @@ fun SshKeyItem(
                         )
                 }
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(text = stringResource(R.string.passphrase) + ":")
-                    Text(
-                        text = stringResource(R.string.click_to_copy),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        fontWeight = FontWeight.Light,
-                        style = MyStyleKt.ClickableText.style,
-                        color = MyStyleKt.ClickableText.color,
-                        modifier = MyStyleKt.ClickableText.modifier.clickable {
-                            copyAndShowCopied(curItemDto.passphrase, activityContext, clipboardManager)
-                        }
+                if(curItemDto.passphrase.isNotEmpty()) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(text = stringResource(R.string.passphrase) + ":")
+                        Text(
+                            text = stringResource(R.string.click_to_copy),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            fontWeight = FontWeight.Light,
+                            style = MyStyleKt.ClickableText.style,
+                            color = MyStyleKt.ClickableText.color,
+                            modifier = MyStyleKt.ClickableText.modifier.clickable {
+                                copyAndShowCopied(curItemDto.passphrase, activityContext, clipboardManager)
+                            }
 
 
-                    )
+                        )
+                    }
                 }
 
 
