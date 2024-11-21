@@ -1,1 +1,1 @@
-<p><i>SshKeyMan</i> 在安卓设备生成ssh密钥！支持ed25519, ecdsa(p256), 和 rsa</p>
+<p><i>SshKeyMan</i> 在安卓设备生成ssh密钥！支持ed25519、 ecdsa(p256)和 rsa。</p>
