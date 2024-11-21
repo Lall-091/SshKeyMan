@@ -12,7 +12,7 @@ SshKeyMan made by Bandeapart1964 of catpuppyapp
 ### SshKeyMan is a free app, but if it helpful to you, please consider Star + <a href=https://github.com/catpuppyapp/PuppyGit/blob/main/donate.md>Donate</a>, it will help this project long live.
 
 ## Download
-<a href="https://github.com/catpuppyapp/PuppySshKeyMan/releases" target="_blank">
+<a href="https://github.com/catpuppyapp/SshKeyMan/releases" target="_blank">
     <img src="https://raw.githubusercontent.com/Kunzisoft/Github-badge/main/get-it-on-github.png" alt="GitHub Release Image" style="width:300px;height:auto;">
 </a>
 <a href="https://apt.izzysoft.de/fdroid/index/apk/com.catpuppyapp.sshkeyman" target="_blank">
