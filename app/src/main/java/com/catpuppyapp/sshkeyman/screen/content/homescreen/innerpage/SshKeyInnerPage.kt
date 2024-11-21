@@ -53,6 +53,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.catpuppyapp.sshkeyman.R
 import com.catpuppyapp.sshkeyman.compose.ConfirmDialog2
+import com.catpuppyapp.sshkeyman.compose.MyCheckBox
 import com.catpuppyapp.sshkeyman.compose.MyLazyColumn
 import com.catpuppyapp.sshkeyman.compose.ScrollableColumn
 import com.catpuppyapp.sshkeyman.compose.SshKeyItem
@@ -142,6 +143,7 @@ fun SshKeyInnerPage(
     val email = rememberSaveable { mutableStateOf("") }
     val passphrase = rememberSaveable { mutableStateOf("") }
     val passwordVisible = rememberSaveable { mutableStateOf(false) }
+    val storePassphrase = rememberSaveable { mutableStateOf(true) }
 
     val algoList = SkmKeyPairGenerator.algoList
     val selectedAlgo = rememberSaveable { mutableIntStateOf(0) }
@@ -217,6 +219,10 @@ fun SshKeyInnerPage(
 
                     Spacer(Modifier.height(spacerHeight))
 
+                    MyCheckBox(stringResource(R.string.store_passphrase), storePassphrase)
+
+                    Spacer(Modifier.height(spacerHeight))
+
                     for ((k, optext) in algoList.withIndex()) {
                         Row(
                             Modifier
@@ -254,13 +260,32 @@ fun SshKeyInnerPage(
             showCreateDialog.value = false
             doJobThenOffLoading {
                 try {
+                    //create entity
                     val algo = algoList[selectedAlgo.intValue]
-                    val sshKeyEntity = SkmSshKeyUtil.createSshKeyEntity(name.value, algo, passphrase.value, email.value)
+                    val sshKeyEntity = SkmSshKeyUtil.createSshKeyEntity(
+                        name = name.value,
+                        algorithm = algo,
+                        passphrase = passphrase.value,
+                        email = email.value,
+                    )
+
+                    // clear pass if user choose dont store it
+                    if(storePassphrase.value.not()) {
+                        sshKeyEntity.passphrase = ""
+                    }
+
+                    // save to db
                     AppModel.singleInstanceHolder.dbContainer.sshKeyRepository.insert(sshKeyEntity)
+
+                    // show success
                     Msg.requireShow(activityContext.getString(R.string.success))
+
+                    // clean state
                     email.value = ""
                     passphrase.value = ""
                     name.value = ""
+
+                    // refresh page
                     changeStateTriggerRefreshPage(needRefreshPage)
                 }catch (e:Exception) {
                     Msg.requireShowLongDuration(e.localizedMessage ?:"unknown err")

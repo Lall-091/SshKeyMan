@@ -10,7 +10,7 @@ object SkmSshKeyUtil {
 //    val jschKeyGen = JschSkmKeyPairGen()
     val sshtoolKeyGen = SshtoolsSkmKeyPairGen()
 
-    fun createSshKeyEntity(name:String, algorithm: String, passphrase: String, email: String): SshKeyEntity {
+    fun createSshKeyEntity(name: String, algorithm: String, passphrase: String, email: String): SshKeyEntity {
         val sshKeyPair = when (algorithm) {
             SkmKeyPairGenerator.ED25519 -> sshtoolKeyGen.generateKeyPair(passphrase, algorithm, 256, email)
             SkmKeyPairGenerator.ECDSA_P256 -> sshtoolKeyGen.generateKeyPair(passphrase, algorithm, 256, email) // 使用 P-256 曲线
