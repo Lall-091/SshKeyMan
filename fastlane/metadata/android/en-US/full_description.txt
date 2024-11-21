@@ -1,8 +1,1 @@
-Generate/Manage your ssh keys on Android devices
-
-
-feature:
-generate ed25519/ecdsa(p256)/rsa ssh keys
-
-
-https://github.com/catpuppyapp/PuppySshKeyMan
+<p><i>SshKeyMan</i> lets you generate and manage your SSH keys on your Android device. It supports ed25519, ecdsa(p256), and rsa keys.</p>

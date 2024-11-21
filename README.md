@@ -13,6 +13,10 @@ SshKeyMan made by Bandeapart1964 of catpuppyapp
 <a href="https://github.com/catpuppyapp/PuppySshKeyMan/releases" target="_blank">
     <img src="https://raw.githubusercontent.com/Kunzisoft/Github-badge/main/get-it-on-github.png" alt="GitHub Release Image" style="width:300px;height:auto;">
 </a>
+<a href="https://apt.izzysoft.de/fdroid/index/apk/com.catpuppyapp.sshkeyman" target="_blank">
+    <img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" alt="IzzyOnDroid Release Image" style="width:300px;height:auto;">
+</a>
+
 
 
 ## Screenshot

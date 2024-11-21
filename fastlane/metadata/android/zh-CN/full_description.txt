@@ -1,8 +1,1 @@
-在安卓设备生成和管理你的SSH密钥
-
-
-特性:
-生成 ed25519/ecdsa(p256)/rsa ssh密钥
-
-
-https://github.com/catpuppyapp/PuppySshKeyMan
+<p><i>SshKeyMan</i> 在安卓设备生成ssh密钥！支持ed25519, ecdsa(p256), 和 rsa</p>
