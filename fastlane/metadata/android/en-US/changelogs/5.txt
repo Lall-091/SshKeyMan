@@ -1,0 +1,2 @@
+- support create keys without store the passphrase
+- code change: if get external app dir err, will try get inner instead (see: https://github.com/catpuppyapp/SshKeyMan/issues/1)

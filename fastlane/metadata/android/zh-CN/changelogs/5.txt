@@ -1,0 +1,2 @@
+- 支持创建密钥时不保存密码短语
+- 代码修改: 如果获取app的外部目录失败，将用内部目录替代 (看: https://github.com/catpuppyapp/SshKeyMan/issues/1)
