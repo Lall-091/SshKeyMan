@@ -66,13 +66,6 @@ class AppModel {
             appModel.tempKeysDir = createDirIfNonexists(externalCacheDir, Cons.TempKeysDirName)
 //            appModel.innerDataDir = innerDataDir
 
-            // clear keys cache every time launch
-            try {
-                appModel.tempKeysDir.deleteRecursively()
-                appModel.tempKeysDir.mkdirs()
-            }catch (e:Exception) {
-                MyLog.e(TAG, "#$funName: clear keys cache dir err: ${e.stackTraceToString()}")
-            }
 
 
             // for avoid sshtools get NPE......., even this 'logging.properties' file doesn't exist yet
@@ -162,6 +155,14 @@ class AppModel {
 
 
                 doJobThenOffLoading {
+            // clear keys cache every time launch
+    //        try {
+    //            appModel.tempKeysDir.deleteRecursively()
+    //            appModel.tempKeysDir.mkdirs()
+    //        }catch (e:Exception) {
+    //            MyLog.e(TAG, "#$funName: clear keys cache dir err: ${e.stackTraceToString()}")
+    //        }
+
                     try {
                         //删除过期日志文件
                         MyLog.delExpiredLogs()
