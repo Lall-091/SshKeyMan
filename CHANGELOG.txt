@@ -1,0 +1,2 @@
+next version:
+rename `email` to `comment`
