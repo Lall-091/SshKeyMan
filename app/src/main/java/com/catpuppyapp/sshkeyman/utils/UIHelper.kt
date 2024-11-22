@@ -24,45 +24,6 @@ import kotlinx.coroutines.launch
 
 object UIHelper {
 
-    object Size {
-        @Composable
-        fun height(): Int {
-            val configuration = LocalConfiguration.current
-            return configuration.screenHeightDp
-        }
-        @Composable
-        fun width(): Int {
-            val configuration = LocalConfiguration.current
-            return configuration.screenWidthDp
-        }
-        @Composable
-        fun heightDp(): Dp {
-            return height().dp
-        }
-        @Composable
-        fun widthDp():Dp {
-            return width().dp
-        }
-
-        //编辑器的虚拟空间，用来把最后一行顶上去的，返回一个Pair，值1是宽，值2是高
-        @Composable
-        fun editorVirtualSpace():Pair<Dp, Dp> {
-            //注：高度如果减的值太小，TopBar固定时，内容会被TopBar盖住，经我测试减100无论隐藏还是显示TopBar都能正常显示内容
-            return Pair(widthDp(), (height()-100).dp)
-        }
-
-        /**
-         * 获取键盘高度。
-         * 注：(?) 需要在Activity#onCreate()执行 `WindowCompat.setDecorFitsSystemWindows(window, false)` 才能获取到有效高度，
-         * 否则只能获取到0，但我没充分验证。
-         */
-        @Composable
-        fun getImeHeightInDp():Dp {
-            val imeHeightInDp = with(LocalDensity.current) { WindowInsets.ime.getBottom(this).toDp() }
-            return imeHeightInDp
-        }
-    }
-
     fun getFontColor(inDarkTheme:Boolean= Theme.inDarkTheme): Color {
         return if(inDarkTheme) MyStyleKt.TextColor.darkThemeFontColor else MyStyleKt.TextColor.fontColor
     }
@@ -192,62 +153,5 @@ object UIHelper {
 //        return MaterialTheme.colorScheme.surfaceBright
     }
 
-
-    fun getConflictOursBlockBgColor():Color {
-        return if(Theme.inDarkTheme) Theme.Orange.copy(alpha = 0.1f) else Theme.Orange.copy(alpha = 0.2f)
-    }
-
-    fun getConflictTheirsBlockBgColor():Color {
-        return if(Theme.inDarkTheme) Color.Magenta.copy(alpha = 0.1f) else Color.Magenta.copy(alpha = 0.2f)
-    }
-
-    fun getConflictStartLineBgColor():Color {
-        return if(Theme.inDarkTheme) Theme.Orange.copy(alpha = 0.2f) else Theme.Orange.copy(alpha = 0.4f)
-    }
-
-    fun getConflictSplitLineBgColor():Color {
-        return if(Theme.inDarkTheme) Theme.darkLightBlue.copy(alpha = 0.4f) else Color.Blue.copy(alpha = 0.2f)
-    }
-
-    fun getConflictEndLineBgColor():Color {
-        return if(Theme.inDarkTheme) Color.Magenta.copy(alpha = 0.2f) else Color.Magenta.copy(alpha = 0.4f)
-    }
-
-    fun getAcceptOursIconColor():Color {
-        return if(Theme.inDarkTheme) Theme.Orange.copy(.4f) else Theme.Orange.copy(.8f)
-    }
-
-    fun getAcceptTheirsIconColor():Color {
-        return if(Theme.inDarkTheme) Color.Magenta.copy(.4f) else Color.Magenta.copy(.8f)
-    }
-    fun getAcceptBothIconColor():Color {
-        return if(Theme.inDarkTheme) Theme.darkLightBlue.copy(alpha = 0.6f) else Color.Blue.copy(.8f)
-    }
-    fun getRejectBothIconColor():Color {
-        return if(Theme.inDarkTheme) Color.Red.copy(.4f) else Color.Red.copy(.8f)
-    }
-
-
-    fun getIconForSwitcher(state: MutableState<Boolean>) = if (state.value) Icons.Filled.ToggleOn else Icons.Filled.ToggleOff
-
-    fun getColorForSwitcher(state: MutableState<Boolean>) = if (state.value) Color(0xFF0090FF) else if(Theme.inDarkTheme) Color.LightGray else Color.Gray
-
-
-    fun getChangeTypeColor(type: String):Color {
-        if(type == Cons.gitStatusNew) {
-            return if(Theme.inDarkTheme) MyStyleKt.ChangeListItemColor.changeTypeAdded_darkTheme else MyStyleKt.ChangeListItemColor.changeTypeAdded
-        }
-        if(type == Cons.gitStatusDeleted) {
-            return if(Theme.inDarkTheme) MyStyleKt.ChangeListItemColor.changeTypeDeleted_darkTheme else MyStyleKt.ChangeListItemColor.changeTypeDeleted
-        }
-        if(type == Cons.gitStatusModified) {
-            return if(Theme.inDarkTheme) MyStyleKt.ChangeListItemColor.changeTypeModified_darkTheme else MyStyleKt.ChangeListItemColor.changeTypeModified
-        }
-        if(type == Cons.gitStatusConflict) {
-            return if(Theme.inDarkTheme) MyStyleKt.ChangeListItemColor.changeTypeConflict_darkTheme else MyStyleKt.ChangeListItemColor.changeTypeConflict
-        }
-
-        return Color.Unspecified
-    }
 
 }

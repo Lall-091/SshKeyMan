@@ -58,5 +58,7 @@
     <string name="input_keyword">Input keyword</string>
     <string name="filter">Filter</string>
     <string name="store_passphrase">Store Passphrase</string>
+    <string name="eg_your_email_example">e.g. your_email@example.com</string>
+    <string name="comment">Comment</string>
 
 </resources>

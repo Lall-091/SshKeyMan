@@ -17,6 +17,7 @@
 package com.catpuppyapp.sshkeyman.data
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -24,6 +25,7 @@ import com.catpuppyapp.sshkeyman.data.dao.PassEncryptDao
 import com.catpuppyapp.sshkeyman.data.dao.SshKeyDao
 import com.catpuppyapp.sshkeyman.data.entity.PassEncryptEntity
 import com.catpuppyapp.sshkeyman.data.entity.SshKeyEntity
+import com.catpuppyapp.sshkeyman.data.migration.auto.From1To2RenameEmailToComment
 
 /**
  * Database class with a singleton Instance object.
@@ -33,12 +35,12 @@ import com.catpuppyapp.sshkeyman.data.entity.SshKeyEntity
                         SshKeyEntity::class,
                         PassEncryptEntity::class,
                      ],
-    version = 1,
+    version = 2,
     //如果支持生成迁移sql，必须设置exportSchema为true，不然就得自己写sql了
     //自动迁移是根据导出的方案生成sql的
     exportSchema = true,
     autoMigrations = [
-//    AutoMigration(from=4, to=5, spec=From4To5DelRepoColumn::class),
+    AutoMigration(from=1, to=2, spec= From1To2RenameEmailToComment::class),
     // other migration if have
     ],
 )

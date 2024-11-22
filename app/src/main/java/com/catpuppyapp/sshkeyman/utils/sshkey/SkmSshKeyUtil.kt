@@ -10,12 +10,12 @@ object SkmSshKeyUtil {
 //    val jschKeyGen = JschSkmKeyPairGen()
     val sshtoolKeyGen = SshtoolsSkmKeyPairGen()
 
-    fun createSshKeyEntity(name: String, algorithm: String, passphrase: String, email: String): SshKeyEntity {
+    fun createSshKeyEntity(name: String, algorithm: String, passphrase: String, comment: String): SshKeyEntity {
         val sshKeyPair = when (algorithm) {
-            SkmKeyPairGenerator.ED25519 -> sshtoolKeyGen.generateKeyPair(passphrase, algorithm, 256, email)
-            SkmKeyPairGenerator.ECDSA_P256 -> sshtoolKeyGen.generateKeyPair(passphrase, algorithm, 256, email) // 使用 P-256 曲线
-            SkmKeyPairGenerator.RSA2048 -> sshtoolKeyGen.generateKeyPair(passphrase, algorithm, 2048, email)
-            SkmKeyPairGenerator.RSA4096 -> sshtoolKeyGen.generateKeyPair(passphrase, algorithm, 4096, email)
+            SkmKeyPairGenerator.ED25519 -> sshtoolKeyGen.generateKeyPair(passphrase, algorithm, 256, comment)
+            SkmKeyPairGenerator.ECDSA_P256 -> sshtoolKeyGen.generateKeyPair(passphrase, algorithm, 256, comment) // 使用 P-256 曲线
+            SkmKeyPairGenerator.RSA2048 -> sshtoolKeyGen.generateKeyPair(passphrase, algorithm, 2048, comment)
+            SkmKeyPairGenerator.RSA4096 -> sshtoolKeyGen.generateKeyPair(passphrase, algorithm, 4096, comment)
             else -> throw IllegalArgumentException("doesn't support algorithm: $algorithm")
         }
 
@@ -23,7 +23,7 @@ object SkmSshKeyUtil {
             publicKey = sshKeyPair.publicKey,
             privateKey = sshKeyPair.privateKey,
             passphrase = passphrase,
-            email = email,
+            comment = comment,
             name = name,
             algo = algorithm
         )

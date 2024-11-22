@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -178,7 +178,7 @@ fun SshKeyItem(
                 Row(modifier = Modifier.fillMaxWidth(.6F)) {
                     Text(
                         text = curItemDto.name,
-                        fontSize = 20.sp,
+                        fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(
                             start = 10.dp,
@@ -195,7 +195,7 @@ fun SshKeyItem(
 
                 LongPressAbleIconBtn(
                     tooltipText = stringResource(R.string.delete),
-                    icon = Icons.Filled.Delete,
+                    icon = Icons.Outlined.Delete,
                     iconContentDesc = stringResource(id = R.string.delete),
                     iconModifier = Modifier.size(20.dp)
                 ) {
@@ -290,8 +290,11 @@ fun SshKeyItem(
                             sb.appendLine(curItemDto.publicKey).appendLine()
                             sb.appendLine("private key:")
                             sb.appendLine(curItemDto.privateKey).appendLine()
-                            sb.appendLine("passphrase:")
-                            sb.appendLine(curItemDto.passphrase).appendLine()
+
+                            if(curItemDto.passphrase.isNotEmpty()) {
+                                sb.appendLine("passphrase:")
+                                sb.appendLine(curItemDto.passphrase).appendLine()
+                            }
 
                             viewDialogText.value = sb.toString()
 

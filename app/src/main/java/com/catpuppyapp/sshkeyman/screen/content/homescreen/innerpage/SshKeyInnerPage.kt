@@ -140,7 +140,7 @@ fun SshKeyInnerPage(
     }
 
     val name = rememberSaveable { mutableStateOf("") }
-    val email = rememberSaveable { mutableStateOf("") }
+    val comment = rememberSaveable { mutableStateOf("") }
     val passphrase = rememberSaveable { mutableStateOf("") }
     val passwordVisible = rememberSaveable { mutableStateOf(false) }
     val storePassphrase = rememberSaveable { mutableStateOf(true) }
@@ -177,14 +177,17 @@ fun SshKeyInnerPage(
                     TextField(
                         modifier = Modifier.fillMaxWidth(),
 
-                        value = email.value,
+                        value = comment.value,
                         onValueChange = {
-                            email.value = it
+                            comment.value = it
                         },
                         singleLine = true,
                         label = {
-                            Text(stringResource(R.string.email))
+                            Text(stringResource(R.string.comment))
                         },
+                        placeholder = {
+                            Text(stringResource(R.string.eg_your_email_example))
+                        }
                     )
                     Spacer(Modifier.height(spacerHeight))
 
@@ -266,7 +269,7 @@ fun SshKeyInnerPage(
                         name = name.value,
                         algorithm = algo,
                         passphrase = passphrase.value,
-                        email = email.value,
+                        comment = comment.value,
                     )
 
                     // clear pass if user choose dont store it
@@ -281,7 +284,7 @@ fun SshKeyInnerPage(
                     Msg.requireShow(activityContext.getString(R.string.success))
 
                     // clean state
-                    email.value = ""
+                    comment.value = ""
                     passphrase.value = ""
                     name.value = ""
 
@@ -347,7 +350,7 @@ fun SshKeyInnerPage(
         val filteredList = if(enableFilter){
             val tmpList = itemList.value.filter {
                 it.name.lowercase().contains(k)
-                        || it.email.lowercase().contains(k)
+                        || it.comment.lowercase().contains(k)
                         || it.algo.lowercase().contains(k)
                         || it.note.lowercase().contains(k)
                         || it.id.lowercase().contains(k)

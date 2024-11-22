@@ -22,11 +22,10 @@ data class SshKeyEntity(
      */
     var name: String = "",  //字段需唯一
     /**
-     * actually this is `comment` for public key, not real make sense
-     * but when create a ssh key, usually input a email address as comment,
-     * so ,named it to `email`, for people , more familiar
+     * comment, usually filled email to it
+     * ps: 若翻译中文，comment翻译成“注释”比较好，note用作“备注”
      */
-    var email:String ="",
+    var comment:String ="", // former name: `email`
     var publicKey:String="",
     var privateKey:String="",
     var passphrase:String="",
