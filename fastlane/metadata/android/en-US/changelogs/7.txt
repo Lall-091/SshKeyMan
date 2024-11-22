@@ -1,3 +1,2 @@
-1.6v7 20241122:
 - rename `email` to `comment`
 - remove unused code
