@@ -4,7 +4,7 @@ Generate/Manage your ssh keys on Android devices
 feature:
 generate ed25519/ecdsa(p256)/rsa(2048, 4096) ssh keys
 
-##### note: Your passphrases are encrypted stored on your device, it will decrypt when loaded keys, most time are safe, but if you worry about that, just uncheck the "Store Passphrase" when create a key, then the app will not save your passphrase, you can remember it by yourself
+##### note: Your passphrases are encrypted stored on your device, it will decrypt when loaded keys, most time are safe, but actually the encryptor using a public password from source code, so if you worry about that, just uncheck the "Store Passphrase" when create a key, then the app will not save your passphrase, you can remember it by yourself
 
 ## Author
 SshKeyMan made by Bandeapart1964 of catpuppyapp
