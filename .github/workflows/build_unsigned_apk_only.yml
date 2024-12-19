@@ -1,0 +1,85 @@
+# 仅构建 apk，不构建libs(使用预编译的库)
+name: Build Unsigned APK Only
+
+on:
+#  push:
+#    tags:
+#      - 'v*'  # 触发条件：当推送标签以 'v' 开头时
+  workflow_dispatch:  # 允许手动触发工作流
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04  # 使用 Ubuntu 运行环境
+
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y \
+            curl \
+            tar \
+            unzip \
+            git
+
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'  # 设置 JDK 版本
+          distribution: 'temurin'  # 指定 JDK 发行版（例如 'adopt', 'zulu', 'temurin', 'oracle' 等）
+
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+          # with:
+          # submodules: true
+          # repository: catpuppyapp/PuppyGit
+          # fetch-depth: 1
+          # ref: main
+        # path: PuppyGit  # if set, must use `$GITHUB_WORKSPACE/PuppyGit` to access the dir, else can simple use `$GITHUB_WORKSPACE`
+
+
+#      - name: Setup cmake
+#        uses: jwlawson/actions-setup-cmake@v2
+#        with:
+#          cmake-version: '3.31.1'
+
+
+      - name: Set 'sdk.dir' to 'local.properties'
+        run: |  
+          ANDROID_HOME=$HOME/app_workspace/android-sdk
+          mkdir -p $ANDROID_HOME
+          $LOCAL_PROPERTIES_PATH=$GITHUB_WORKSPACE/local.properties
+          echo -e "\nsdk.dir=$ANDROID_HOME" >> $LOCAL_PROPERTIES_PATH
+          echo "local.properties at: $LOCAL_PROPERTIES_PATH"
+          echo "cat local.properties:"
+          cat $LOCAL_PROPERTIES_PATH
+
+
+      - name: Build Release APK
+        run: |
+          cd $GITHUB_WORKSPACE
+          chmod +x gradlew
+          ./gradlew clean
+          ./gradlew assembleRelease
+
+      - name: Upload Release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-unsigned.apk
+          path: ${{ github.workspace }}/app/build/outputs/apk/release/app-release-unsigned.apk
+          retention-days: 15
+          
+      - name: Build Debug APK
+        run: |
+          cd $GITHUB_WORKSPACE
+          chmod +x gradlew
+          ./gradlew clean
+          ./gradlew assembleDebug
+
+      - name: Upload Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-unsigned.apk
+          path: ${{ github.workspace }}/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 15
