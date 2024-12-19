@@ -46,10 +46,10 @@ jobs:
 
       - name: Set 'sdk.dir' to 'local.properties'
         run: |  
-          ls $GITHUB_WORKSPACE
           ANDROID_HOME=$HOME/app_workspace/android-sdk
           mkdir -p $ANDROID_HOME
           $LOCAL_PROPERTIES_PATH=$GITHUB_WORKSPACE/local.properties
+          touch $LOCAL_PROPERTIES_PATH
           echo -e "\nsdk.dir=$ANDROID_HOME" >> $LOCAL_PROPERTIES_PATH
           echo "local.properties at: $LOCAL_PROPERTIES_PATH"
           echo "cat local.properties:"
