@@ -28,18 +28,20 @@ curl -L -o cmdline-tools.zip https://dl.google.com/android/repository/commandlin
 # 删一下，确保mv后目录结构不变
 rm -rf $ANDROID_CMD_TOOLS
 # 解压然后移动，确保先删后解压移动，以免当解压后的目录和移动的目标目录同名时误删
-unzip cmdline-tools.zip -d $TOOLS/
+unzip -q cmdline-tools.zip -d $TOOLS/
 mv $TOOLS/cmdline-tools $ANDROID_CMD_TOOLS
 export ANDROID_SDKMANAGER=$ANDROID_CMD_TOOLS/bin/sdkmanager
 chmod +x $ANDROID_SDKMANAGER
 
+# 随便装个东西，不然后面gradle会接受协议失败
 yes | $ANDROID_SDKMANAGER --install "cmdline-tools;17.0" --sdk_root=$ANDROID_HOME
-ANDROID_SDKMANAGER=$ANDROID_HOME/cmdline-tools/17.0/sdkmanager
-chmod +x $ANDROID_SDKMANAGER
-echo "Accept all android sdk licenses to avoid failed by license not accepted"
-yes | $ANDROID_SDKMANAGER --licenses
+ls -R $ANDROID_HOME
+# ANDROID_SDKMANAGER=$ANDROID_HOME/cmdline-tools/17.0/sdkmanager
+# chmod +x $ANDROID_SDKMANAGER
+# echo "Accept all android sdk licenses to avoid failed by license not accepted"
+# yes | $ANDROID_SDKMANAGER --licenses
 
-echo "set sdk.dir to local.properties for gradle"
+echo "set ‘sdk.dir’ to ‘local.properties’ for gradle"
 # 设置 sdk.dir 以使 github workflow 使用gradle构建apk的时候能找到我们指定版本的cmake和ndk
 # -e是为了能输出换行符\n
 # 由于izzydroid 用的gitlab，里面没有$GITHUB_WORKSPACE这个变量，所以用实际变量值替换了，不然路径找不到，会有bug
