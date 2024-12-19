@@ -33,9 +33,11 @@ mv $TOOLS/cmdline-tools $ANDROID_CMD_TOOLS
 export ANDROID_SDKMANAGER=$ANDROID_CMD_TOOLS/bin/sdkmanager
 chmod +x $ANDROID_SDKMANAGER
 
+yes | $ANDROID_SDKMANAGER --install "cmdline-tools;17.0" --sdk_root=$ANDROID_HOME
+ANDROID_SDKMANAGER=$ANDROID_HOME/cmdline-tools/17.0/sdkmanager
+chmod +x $ANDROID_SDKMANAGER
 echo "Accept all android sdk licenses to avoid failed by license not accepted"
 yes | $ANDROID_SDKMANAGER --licenses
-
 
 echo "set sdk.dir to local.properties for gradle"
 # 设置 sdk.dir 以使 github workflow 使用gradle构建apk的时候能找到我们指定版本的cmake和ndk
