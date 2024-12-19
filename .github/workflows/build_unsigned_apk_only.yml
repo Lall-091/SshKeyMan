@@ -44,16 +44,8 @@ jobs:
 #          cmake-version: '3.31.1'
 
 
-      - name: Set 'sdk.dir' to 'local.properties'
-        run: |  
-          ANDROID_HOME=$HOME/app_workspace/android-sdk
-          mkdir -p $ANDROID_HOME
-          LOCAL_PROPERTIES_PATH=$GITHUB_WORKSPACE/local.properties
-          echo -e "\nsdk.dir=$ANDROID_HOME" >> $LOCAL_PROPERTIES_PATH
-          echo "local.properties at: $LOCAL_PROPERTIES_PATH"
-          echo "cat local.properties:"
-          cat $LOCAL_PROPERTIES_PATH
-
+      - name: Install require software
+        run: bash $GITHUB_WORKSPACE/build_scripts/1_installrequire.sh
 
       - name: Build Release APK
         run: |
