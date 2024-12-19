@@ -18,8 +18,7 @@ jobs:
           sudo apt install -y \
             curl \
             tar \
-            unzip \
-            git
+            unzip
 
 
       - name: Set up JDK
@@ -47,6 +46,7 @@ jobs:
 
       - name: Set 'sdk.dir' to 'local.properties'
         run: |  
+          ls $GITHUB_WORKSPACE
           ANDROID_HOME=$HOME/app_workspace/android-sdk
           mkdir -p $ANDROID_HOME
           $LOCAL_PROPERTIES_PATH=$GITHUB_WORKSPACE/local.properties
