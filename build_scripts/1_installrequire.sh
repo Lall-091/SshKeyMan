@@ -35,8 +35,8 @@ chmod +x $ANDROID_SDKMANAGER
 
 # 随便装个东西，不然后面gradle会接受协议失败
 yes | $ANDROID_SDKMANAGER --install "cmdline-tools;17.0" --sdk_root=$ANDROID_HOME
-ls -R $ANDROID_HOME
-# ANDROID_SDKMANAGER=$ANDROID_HOME/cmdline-tools/17.0/sdkmanager
+# ls -R $ANDROID_HOME
+# ANDROID_SDKMANAGER=$ANDROID_HOME/cmdline-tools/17.0/bin/sdkmanager
 # chmod +x $ANDROID_SDKMANAGER
 # echo "Accept all android sdk licenses to avoid failed by license not accepted"
 # yes | $ANDROID_SDKMANAGER --licenses
