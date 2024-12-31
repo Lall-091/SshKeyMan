@@ -1,5 +1,12 @@
+1.8v9 20241210:
+- update jvmTarget to 17
+
+---
+
 1.7v8 20241210:
 - update android target sdk to 35
+
+---
 
 1.6v7 20241122:
 - rename `email` to `comment`
