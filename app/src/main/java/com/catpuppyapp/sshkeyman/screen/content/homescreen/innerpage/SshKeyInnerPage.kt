@@ -203,14 +203,10 @@ fun SshKeyInnerPage(
                         visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         trailingIcon = {
-                            val image = if (passwordVisible.value) Icons.Filled.Visibility
-                            else Icons.Filled.VisibilityOff
+                            val image = if (passwordVisible.value) Icons.Filled.VisibilityOff else Icons.Filled.Visibility
 
                             // Please provide localized description for accessibility services
-                            val description =
-                                if (passwordVisible.value) stringResource(R.string.hide) else stringResource(
-                                    R.string.show
-                                )
+                            val description = if (passwordVisible.value) "passphrase now is visible" else "passphrase now is invisible"
 
                             IconButton(onClick = { passwordVisible.value = !passwordVisible.value }) {
                                 // contentDescription is for accessibility
