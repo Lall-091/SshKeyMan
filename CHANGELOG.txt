@@ -1,3 +1,7 @@
+1.9v10 20250724:
+- reverse passphrase visible/invisible icons
+
+---
 1.8v9 20241210:
 - update jvmTarget to 17
 
