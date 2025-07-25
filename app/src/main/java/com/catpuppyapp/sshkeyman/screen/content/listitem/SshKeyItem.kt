@@ -1,4 +1,4 @@
-package com.catpuppyapp.sshkeyman.compose
+package com.catpuppyapp.sshkeyman.screen.content.listitem
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -30,6 +30,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.catpuppyapp.sshkeyman.R
+import com.catpuppyapp.sshkeyman.compose.ConfirmDialog2
+import com.catpuppyapp.sshkeyman.compose.CopyableDialog
+import com.catpuppyapp.sshkeyman.compose.LongPressAbleIconBtn
 import com.catpuppyapp.sshkeyman.data.entity.SshKeyEntity
 import com.catpuppyapp.sshkeyman.style.MyStyleKt
 import com.catpuppyapp.sshkeyman.theme.Theme
@@ -43,7 +46,7 @@ import com.catpuppyapp.sshkeyman.utils.doJobThenOffLoading
 import com.catpuppyapp.sshkeyman.utils.state.CustomStateSaveable
 import kotlinx.coroutines.delay
 
-private val TAG = "SshKeyItem"
+private const val TAG = "SshKeyItem"
 
 @Composable
 fun SshKeyItem(
@@ -75,10 +78,10 @@ fun SshKeyItem(
             title = curItemDto.name,
             text = viewDialogText.value,
             onCancel = {
-                showViewDialog.value=false
+                showViewDialog.value = false
             }
         ) { //复制到剪贴板
-            showViewDialog.value=false
+            showViewDialog.value = false
             clipboardManager.setText(AnnotatedString(viewDialogText.value))
             Msg.requireShow(activityContext.getString(R.string.copied))
         }
@@ -95,17 +98,17 @@ fun SshKeyItem(
                 }
             },
             okTextColor = MyStyleKt.TextColor.danger(),
-            onCancel = {showDelDialog.value =false}
+            onCancel = { showDelDialog.value = false }
         ) {
-            showDelDialog.value =false
+            showDelDialog.value = false
             doJobThenOffLoading {
                 try {
                     AppModel.singleInstanceHolder.dbContainer.sshKeyRepository.delete(curItemDto)
 
                     Msg.requireShow(activityContext.getString(R.string.success))
                     changeStateTriggerRefreshPage(needRefresh)
-                }catch (e:Exception) {
-                    Msg.requireShowLongDuration(e.localizedMessage ?:"unknown err")
+                } catch (e: Exception) {
+                    Msg.requireShowLongDuration(e.localizedMessage ?: "unknown err")
                     MyLog.e(TAG, "delete ssh key '${curItemDto.name}' err: ${e.stackTraceToString()}")
                 }
             }
@@ -114,13 +117,13 @@ fun SshKeyItem(
 
 
 
-    val setCurItem = {
-        //设置当前仓库（如果不将repo先设置为无效值，可能会导致页面获取旧值，显示过时信息）
-        curItem.value = SshKeyEntity()  // change state to a new value, if delete this line, may cause page not refresh after changed repo
-        curItem.value = curItemDto  // update state to target value
-
-        curItemIdx.intValue = curItemDtoIdx
-    }
+//    val setCurItem = {
+//        //设置当前仓库（如果不将repo先设置为无效值，可能会导致页面获取旧值，显示过时信息）
+//        curItem.value = SshKeyEntity()  // change state to a new value, if delete this line, may cause page not refresh after changed repo
+//        curItem.value = curItemDto  // update state to target value
+//
+//        curItemIdx.intValue = curItemDtoIdx
+//    }
 
     Column (modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,

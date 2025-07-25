@@ -56,7 +56,7 @@ import com.catpuppyapp.sshkeyman.compose.ConfirmDialog2
 import com.catpuppyapp.sshkeyman.compose.MyCheckBox
 import com.catpuppyapp.sshkeyman.compose.MyLazyColumn
 import com.catpuppyapp.sshkeyman.compose.ScrollableColumn
-import com.catpuppyapp.sshkeyman.compose.SshKeyItem
+import com.catpuppyapp.sshkeyman.screen.content.listitem.SshKeyItem
 import com.catpuppyapp.sshkeyman.data.AppContainer
 import com.catpuppyapp.sshkeyman.data.entity.SshKeyEntity
 import com.catpuppyapp.sshkeyman.style.MyStyleKt
