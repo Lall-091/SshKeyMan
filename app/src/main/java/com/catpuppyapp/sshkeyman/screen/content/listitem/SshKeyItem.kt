@@ -219,7 +219,7 @@ fun SshKeyItem(
                 ) {
                     Text(text = stringResource(R.string.publickey) + ":")
                     Text(
-                        text = stringResource(R.string.click_to_copy),
+                        text = stringResource(R.string.copy_uppercase),
 
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
@@ -239,7 +239,7 @@ fun SshKeyItem(
                 ) {
                     Text(text = stringResource(R.string.privatekey) + ":")
                     Text(
-                        text = stringResource(R.string.click_to_copy),
+                        text = stringResource(R.string.copy_uppercase),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         fontWeight = FontWeight.Light,
@@ -259,7 +259,7 @@ fun SshKeyItem(
                     ) {
                         Text(text = stringResource(R.string.passphrase) + ":")
                         Text(
-                            text = stringResource(R.string.click_to_copy),
+                            text = stringResource(R.string.copy_uppercase),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                             fontWeight = FontWeight.Light,
@@ -280,7 +280,7 @@ fun SshKeyItem(
                 ) {
                     Text(text = stringResource(R.string.details) + ":")
                     Text(
-                        text = stringResource(R.string.click_to_view),
+                        text = stringResource(R.string.view_uppercase),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         fontWeight = FontWeight.Light,

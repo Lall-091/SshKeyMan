@@ -60,5 +60,7 @@
     <string name="store_passphrase">Store Passphrase</string>
     <string name="eg_your_email_example">e.g. your_email@example.com</string>
     <string name="comment">Comment</string>
+    <string name="copy_uppercase">COPY</string>
+    <string name="view_uppercase">VIEW</string>
 
 </resources>
