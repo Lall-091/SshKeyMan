@@ -154,8 +154,7 @@ fun AboutInnerPage(contentPadding: PaddingValues,
         ) {
             Text(
                 text = stringResource(R.string.source_code),
-                style = MyStyleKt.ClickableText.style,
-                color = MyStyleKt.ClickableText.color,
+                color = MyStyleKt.ClickableText.color(),
                 modifier = MyStyleKt.ClickableText.modifierNoPadding.clickable {
                     ActivityUtil.openUrl(activityContext, sourceCodeLink)
                 },
@@ -171,8 +170,7 @@ fun AboutInnerPage(contentPadding: PaddingValues,
         ) {
             Text(
                 text = stringResource(R.string.discussions),
-                style = MyStyleKt.ClickableText.style,
-                color = MyStyleKt.ClickableText.color,
+                color = MyStyleKt.ClickableText.color(),
                 modifier = MyStyleKt.ClickableText.modifierNoPadding.clickable {
                     //                    copy(authorMail)
                     ActivityUtil.openUrl(activityContext, discussionLink)
@@ -189,8 +187,7 @@ fun AboutInnerPage(contentPadding: PaddingValues,
         ) {
             Text(
                 text = stringResource(R.string.report_bugs),
-                style = MyStyleKt.ClickableText.style,
-                color = MyStyleKt.ClickableText.color,
+                color = MyStyleKt.ClickableText.color(),
                 modifier = MyStyleKt.ClickableText.modifierNoPadding.clickable {
                     ActivityUtil.openUrl(activityContext, reportBugsLink)
                 },
@@ -206,8 +203,7 @@ fun AboutInnerPage(contentPadding: PaddingValues,
 //            Text(text = stringResource(R.string.contact_author)+":")
             Text(
                 text = stringResource(R.string.contact_author),
-                style = MyStyleKt.ClickableText.style,
-                color = MyStyleKt.ClickableText.color,
+                color = MyStyleKt.ClickableText.color(),
                 modifier = MyStyleKt.ClickableText.modifierNoPadding.clickable {
 //                    copy(authorMail)
                     ActivityUtil.openUrl(activityContext, authorMailLink)
@@ -225,8 +221,7 @@ fun AboutInnerPage(contentPadding: PaddingValues,
 //            Text(text = stringResource(R.string.contact_author)+":")
             Text(
                 text = stringResource(R.string.donate),
-                style = MyStyleKt.ClickableText.style,
-                color = MyStyleKt.ClickableText.color,
+                color = MyStyleKt.ClickableText.color(),
                 modifier = MyStyleKt.ClickableText.modifierNoPadding.clickable {
 //                    copy(authorMail)
                     ActivityUtil.openUrl(activityContext, donateLink)
@@ -242,8 +237,7 @@ fun AboutInnerPage(contentPadding: PaddingValues,
         ) {
             Text(
                 text = stringResource(R.string.privacy_policy),
-                style = MyStyleKt.ClickableText.style,
-                color = MyStyleKt.ClickableText.color,
+                color = MyStyleKt.ClickableText.color(),
                 modifier = MyStyleKt.ClickableText.modifierNoPadding.clickable {
 //                    copy(authorMail)
                     ActivityUtil.openUrl(activityContext, privacyPolicyLink)
@@ -264,8 +258,7 @@ fun AboutInnerPage(contentPadding: PaddingValues,
                 Text(
                     text = it.projectName,
 //                    fontSize = 14.sp,
-                    style = MyStyleKt.ClickableText.style,
-                    color = MyStyleKt.ClickableText.color,
+                    color = MyStyleKt.ClickableText.color(),
                     modifier = MyStyleKt.ClickableText.modifierNoPadding.clickable {
                         //                        copy(it.projectLink)
                         ActivityUtil.openUrl(activityContext, it.projectLink)
@@ -275,8 +268,7 @@ fun AboutInnerPage(contentPadding: PaddingValues,
                 Text(
                     text = "("+stringResource(R.string.license_all_uppercase)+")",
                     fontSize = 12.sp,
-                    style = MyStyleKt.ClickableText.style,
-                    color = MyStyleKt.ClickableText.color,
+                    color = MyStyleKt.ClickableText.color(),
                     modifier = MyStyleKt.ClickableText.modifierNoPadding.clickable {
                         //                        copy(it.projectLink)
                         ActivityUtil.openUrl(activityContext, it.licenseLink)

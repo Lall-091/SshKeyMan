@@ -327,8 +327,7 @@ fun SshKeyInnerPage(
                 }
                 Row {
                     Text(text = stringResource(id = R.string.create_a_key),
-                        style = MyStyleKt.ClickableText.style,
-                        color = MyStyleKt.ClickableText.color,
+                        color = MyStyleKt.ClickableText.color(),
                         fontSize = MyStyleKt.TextSize.default
                     )
                 }

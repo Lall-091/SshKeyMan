@@ -33,6 +33,7 @@ import com.catpuppyapp.sshkeyman.R
 import com.catpuppyapp.sshkeyman.compose.ConfirmDialog2
 import com.catpuppyapp.sshkeyman.compose.CopyableDialog
 import com.catpuppyapp.sshkeyman.compose.LongPressAbleIconBtn
+import com.catpuppyapp.sshkeyman.compose.ScrollableRow
 import com.catpuppyapp.sshkeyman.data.entity.SshKeyEntity
 import com.catpuppyapp.sshkeyman.style.MyStyleKt
 import com.catpuppyapp.sshkeyman.theme.Theme
@@ -217,60 +218,67 @@ fun SshKeyItem(
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(text = stringResource(R.string.publickey) + ":")
-                    Text(
-                        text = stringResource(R.string.copy_uppercase),
+                    Text(text = stringResource(R.string.publickey) + ": ")
 
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        fontWeight = FontWeight.Light,
-                        style = MyStyleKt.ClickableText.style,
-                        color = MyStyleKt.ClickableText.color,
-                        modifier = MyStyleKt.ClickableText.modifier.clickable {
-                            copyAndShowCopied(curItemDto.publicKey, activityContext, clipboardManager)
-                        },
+                    ScrollableRow {
+
+                        Text(
+                            text = stringResource(R.string.copy_uppercase),
+
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            fontSize = MyStyleKt.ClickableText.fontSize,
+                            color = MyStyleKt.ClickableText.color(),
+                            modifier = MyStyleKt.ClickableText.modifier.clickable {
+                                copyAndShowCopied(curItemDto.publicKey, activityContext, clipboardManager)
+                            },
 
 
                         )
+                    }
                 }
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(text = stringResource(R.string.privatekey) + ":")
-                    Text(
-                        text = stringResource(R.string.copy_uppercase),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        fontWeight = FontWeight.Light,
-                        style = MyStyleKt.ClickableText.style,
-                        color = MyStyleKt.ClickableText.color,
-                        modifier = MyStyleKt.ClickableText.modifier.clickable {
-                            copyAndShowCopied(curItemDto.privateKey, activityContext, clipboardManager)
-                        },
+                    Text(text = stringResource(R.string.privatekey) + ": ")
+
+                    ScrollableRow {
+
+                        Text(
+                            text = stringResource(R.string.copy_uppercase),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            fontSize = MyStyleKt.ClickableText.fontSize,
+                            color = MyStyleKt.ClickableText.color(),
+                            modifier = MyStyleKt.ClickableText.modifier.clickable {
+                                copyAndShowCopied(curItemDto.privateKey, activityContext, clipboardManager)
+                            },
 
 
                         )
+                    }
                 }
 
                 if(curItemDto.passphrase.isNotEmpty()) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(text = stringResource(R.string.passphrase) + ":")
-                        Text(
-                            text = stringResource(R.string.copy_uppercase),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            fontWeight = FontWeight.Light,
-                            style = MyStyleKt.ClickableText.style,
-                            color = MyStyleKt.ClickableText.color,
-                            modifier = MyStyleKt.ClickableText.modifier.clickable {
-                                copyAndShowCopied(curItemDto.passphrase, activityContext, clipboardManager)
-                            }
+                        Text(text = stringResource(R.string.passphrase) + ": ")
+                        ScrollableRow {
 
+                            Text(
+                                text = stringResource(R.string.copy_uppercase),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                fontSize = MyStyleKt.ClickableText.fontSize,
+                                color = MyStyleKt.ClickableText.color(),
+                                modifier = MyStyleKt.ClickableText.modifier.clickable {
+                                    copyAndShowCopied(curItemDto.passphrase, activityContext, clipboardManager)
+                                }
 
-                        )
+                            )
+                        }
                     }
                 }
 
@@ -278,44 +286,45 @@ fun SshKeyItem(
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(text = stringResource(R.string.details) + ":")
-                    Text(
-                        text = stringResource(R.string.view_uppercase),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        fontWeight = FontWeight.Light,
-                        style = MyStyleKt.ClickableText.style,
-                        color = MyStyleKt.ClickableText.color,
-                        modifier = MyStyleKt.ClickableText.modifier.clickable {
+                    Text(text = stringResource(R.string.details) + ": ")
 
-                            val sb = StringBuilder()
-                            sb.appendLine("public key:")
-                            sb.appendLine(curItemDto.publicKey).appendLine()
-                            sb.appendLine("private key:")
-                            sb.appendLine(curItemDto.privateKey).appendLine()
+                    ScrollableRow {
+                        Text(
+                            text = stringResource(R.string.view_uppercase),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            fontSize = MyStyleKt.ClickableText.fontSize,
+                            color = MyStyleKt.ClickableText.color(),
+                            modifier = MyStyleKt.ClickableText.modifier.clickable {
 
-                            if(curItemDto.passphrase.isNotEmpty()) {
-                                sb.appendLine("passphrase:")
-                                sb.appendLine(curItemDto.passphrase).appendLine()
-                            }
+                                val sb = StringBuilder()
+                                sb.appendLine("public key: ")
+                                sb.appendLine(curItemDto.publicKey).appendLine()
+                                sb.appendLine("private key: ")
+                                sb.appendLine(curItemDto.privateKey).appendLine()
 
-                            viewDialogText.value = sb.toString()
+                                if(curItemDto.passphrase.isNotEmpty()) {
+                                    sb.appendLine("passphrase: ")
+                                    sb.appendLine(curItemDto.passphrase).appendLine()
+                                }
 
-                            showViewDialog.value = true
-                        },
+                                viewDialogText.value = sb.toString()
 
-                        )
+                                showViewDialog.value = true
+                            },
+
+                            )
+                    }
                 }
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(text = stringResource(R.string.algo) + ":")
+                    Text(text = stringResource(R.string.algo) + ": ")
                     Text(
                         text = curItemDto.algo,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        fontWeight = FontWeight.Light,
                         modifier = MyStyleKt.NormalText.modifier,
 
                     )
@@ -324,12 +333,11 @@ fun SshKeyItem(
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(text = stringResource(R.string.create) + ":")
+                    Text(text = stringResource(R.string.create) + ": ")
                     Text(
                         text = curItemDto.getCreateTimeCached(),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        fontWeight = FontWeight.Light,
                         modifier = MyStyleKt.NormalText.modifier,
 
                     )

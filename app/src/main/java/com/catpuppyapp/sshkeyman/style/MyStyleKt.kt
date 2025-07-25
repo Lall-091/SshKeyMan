@@ -7,9 +7,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.catpuppyapp.sshkeyman.theme.Theme
@@ -17,8 +14,11 @@ import com.catpuppyapp.sshkeyman.theme.Theme
 class MyStyleKt{
 
     object ClickableText{
-        val style: TextStyle = TextStyle(textDecoration = TextDecoration.Underline)
-        val color = Color(0xFF0096FF)
+//        val style: TextStyle = TextStyle(textDecoration = TextDecoration.Underline)
+        private val colorLight = Color(0xFF00159A)
+        private val colorDark = Color(0xFF0096FF)
+        fun color(inDarkTheme: Boolean = Theme.inDarkTheme) = if(inDarkTheme) colorDark else colorLight
+
         val errColor = Color(0xFFFF5733)
         val minClickableSize = 25.dp
 //        val modifier = Modifier.padding(start = 1.dp,top=15.dp, bottom = 0.dp, end=1.dp)
@@ -26,7 +26,9 @@ class MyStyleKt{
         val modifier = Modifier.padding(start = 3.dp,top=0.dp, bottom = 0.dp, end=1.dp).defaultMinSize(minClickableSize)
         val modifierNoPadding = Modifier.defaultMinSize(minClickableSize)
 //        val fontSize = 15.sp
-        val textAlign = TextAlign.Center
+//        val textAlign = TextAlign.Center
+        val fontSize = 16.sp
+
     }
     object NormalText{
 //        val modifier = Modifier.padding(start = 1.dp,top=15.dp, bottom = 0.dp, end=1.dp)
