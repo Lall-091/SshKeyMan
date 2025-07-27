@@ -15,7 +15,7 @@ class MyStyleKt{
 
     object ClickableText{
 //        val style: TextStyle = TextStyle(textDecoration = TextDecoration.Underline)
-        private val colorLight = Color(0xFF00159A)
+        private val colorLight = Color(0xFF004FD7)
         private val colorDark = Color(0xFF0096FF)
         fun color(inDarkTheme: Boolean = Theme.inDarkTheme) = if(inDarkTheme) colorDark else colorLight
 
