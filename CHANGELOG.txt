@@ -1,3 +1,7 @@
+1.10v11 20250728:
+- upgrade target sdk to latest android version
+
+---
 1.9v10 20250724:
 - reverse passphrase visible/invisible icons
 
