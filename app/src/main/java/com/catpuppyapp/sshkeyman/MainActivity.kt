@@ -35,23 +35,8 @@ import java.security.Security
 import java.util.Locale
 
 
-private val TAG = "MainActivity"
+private const val TAG = "MainActivity"
 
-// use `ActivityUtil.getCurrentActivity()` instead
-//fun Context.findActivity(): Activity? = when (this) {
-//    is Activity -> this
-//    is ContextWrapper -> baseContext.findActivity()
-//    else -> null
-//}
-////
-//fun Context.setAppLocale(language: String): Context {
-//    val locale = Locale(language)
-//    Locale.setDefault(locale)
-//    val config = resources.configuration
-//    config.setLocale(locale)
-//    config.setLayoutDirection(locale)
-//    return createConfigurationContext(config)
-//}
 
 class MainActivity : ComponentActivity() {
     companion object {
