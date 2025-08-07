@@ -11,6 +11,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.catpuppyapp.sshkeyman.utils.forEachBetter
+import com.catpuppyapp.sshkeyman.utils.forEachIndexedBetter
 
 //lazyColumn老出问题，不是并发修改异常就是索引越界，统一弄到这里方便修改和debug
 @Composable
@@ -57,7 +59,7 @@ fun <T> MyLazyColumn(
         ){
             if(requireForEachWithIndex) {
                 // toList似乎会拷贝元素可在一定程度避免并发修改异常
-                listCopy.forEachIndexed { idx,it->
+                listCopy.forEachIndexedBetter { idx,it->
                     if(requireUseCustomLazyListScope) {
                         customLazyListScopeWithIndex(idx, it)
                     }else {
@@ -68,7 +70,7 @@ fun <T> MyLazyColumn(
                 }
 
             }else {
-                listCopy.forEach {
+                listCopy.forEachBetter {
                     if(requireUseCustomLazyListScope) {
                         customLazyListScope(it)
                     }else {

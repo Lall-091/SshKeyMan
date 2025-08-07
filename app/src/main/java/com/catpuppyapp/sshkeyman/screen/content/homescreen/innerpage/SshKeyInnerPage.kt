@@ -371,16 +371,16 @@ fun SshKeyInnerPage(
             listState = listState,
             requireForEachWithIndex = true,
             requirePaddingAtBottom = true
-        ) {idx, element->
+        ) { idx, element ->
 
             SshKeyItem(
-                showBottomSheet,
-                curRepo,
-                curRepoIndex,
-                element,
-                idx,
+                showBottomSheet = showBottomSheet,
+                curItem = curRepo,
+                curItemIdx = curRepoIndex,
+                curItemDto = element,
+                curItemDtoIdx = idx,
                 requireBlinkIdx = requireBlinkIdx,
-                needRefreshPage
+                needRefresh = needRefreshPage
             )
 
         }
